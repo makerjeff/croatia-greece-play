@@ -1,6 +1,8 @@
 /**
  * Created by jeffersonwu on 7/20/16.
  * Example from Web Development with Node and Express
+ *
+ * Note: Manual routing with http module.
  */
 
 var port = process.env.PORTNUM;
