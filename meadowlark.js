@@ -6,32 +6,41 @@
 var express = require('express');
 var app = express();
 
+//set up Handlebars as view engine
+// var handlebars = require('express-handlebars').create({defaultLayout:'main});
+var handlebarsModule = require('express-handlebars');
+var handlebars = handlebarsModule.create({defaultLayout:'main'});
+
+app.engine('handlebars', handlebars.engine);
+
+app.set('view engine', 'handlebars');
+
 //an app setter
 app.set('port', process.env.PORT || 3000);
 
 // ---- routes ----
 app.get('/', function(req, res){
-    res.type('text/plain');
-    res.send('Meadowlark Travel');
+    res.render('home');
 });
 app.get('/about', function(req, res){
-    res.type('text/plain');
-    res.send('About Meadowlark Travel');
+    res.render('about');
 });
 
 // ---- middlware -----
+
+// serve static files
+app.use(express.static(__dirname + '/public'));
+
 // custom 404 page middleware
 app.use(function(req,res,next){
-    res.type('text/plain');
     res.status(404);
-    res.send('Meadowlark - 404 - Not Found');
+    res.render('404');
 });
 
 // custom 500 page middleware
 app.use(function(req,res,next){
-    res.type('text/plain');
     res.status(500);
-    res.send('Meadowlark - 500 - Server Error');
+    res.render('500');
 });
 
 //using an app getter...
