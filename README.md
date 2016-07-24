@@ -12,5 +12,10 @@
     - copy to mocha.js and mocha.css to public/vendor folder.
     - "--save-dev chai" for assert().
     - copy chai.js to public/vendor.
+- dev dependencies that should be included:
+    - mocha
+    - chai
+    - zombie (downgraded to 2.5.1 to work with book, new version might have their own 'assert' methods now)
+- including JSHint.
 
 ##Reference
