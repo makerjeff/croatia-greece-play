@@ -2,12 +2,43 @@
 <html>
 <head>
     <title>Meadowlark Travel</title>
-    <link rel="stylesheet" href="/css/style.css">
+    {{! if the variable 'showTests' in context is set to TRUE...}}
+    {{#if showTests}}
+        <link rel="stylesheet" href="/vendor/mocha.css">
+    {{/if}}
+
+    {{! use JQuery for assertions }}
+    <script src="/public/lib/jquery.min.js"></script>
+
 </head>
 <body>
 <header>
-    <img src="img/logo.jpg" alt="Meadlark Travel Logo">
+    <img src="/img/logo.jpg" alt="Meadlark Travel Logo">
 </header>
     {{{body}}}
+
+{{! if QA testing is enabled }}
+{{#if showTests}}
+    <div id="mocha"></div>
+    <script src="/vendor/mocha.js"></script>
+    <script src="/vendor/chai.js"></script>
+    <script>
+        //explicit change to test driven dev vs behavior driven dev.
+        mocha.ui('tdd');
+        var assert = chai.assert;
+    </script>
+
+    <script src="qa/tests-global.js"></script>
+    {{#if pageTestScript}}
+        <script src="{{pageTestScript}}"></script>
+    {{/if}}
+
+    {{!run mocha}}
+    <script>
+        mocha.run();
+    </script>
+{{/if}}
+
+{{!TODO: continue here}}
 </body>
 </html>

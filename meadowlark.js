@@ -26,6 +26,13 @@ app.use(function(req,res,next){
     next();
 });
 
+// QA testing switch (middlware)
+app.use(function(req,res,next){
+    //res.locals is part of the 'context' that gets passed to views.(ch7)
+    res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
+    next();
+});
+
 // ---- routes ----
 app.get('/', function(req, res){
     res.render('home');
