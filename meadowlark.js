@@ -38,7 +38,10 @@ app.get('/', function(req, res){
     res.render('home');
 });
 app.get('/about', function(req, res){
-    res.render('about', {fortune: fortune.getFortune()});
+    res.render('about', {
+        fortune: fortune.getFortune(),
+        pageTestScript: '/qa/tests-about.js'
+    });
 });
 
 // ---- middlware -----

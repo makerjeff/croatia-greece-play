@@ -8,7 +8,7 @@
     {{/if}}
 
     {{! use JQuery for assertions }}
-    <script src="/public/lib/jquery.min.js"></script>
+    <script src="/lib/jquery.min.js"></script>
 
 </head>
 <body>
@@ -16,6 +16,8 @@
     <img src="/img/logo.jpg" alt="Meadlark Travel Logo">
 </header>
     {{{body}}}
+
+<a href="/contact">contact</a>
 
 {{! if QA testing is enabled }}
 {{#if showTests}}
@@ -28,7 +30,7 @@
         var assert = chai.assert;
     </script>
 
-    <script src="qa/tests-global.js"></script>
+    <script src="/qa/tests-global.js"></script>
     {{#if pageTestScript}}
         <script src="{{pageTestScript}}"></script>
     {{/if}}
@@ -39,6 +41,5 @@
     </script>
 {{/if}}
 
-{{!TODO: continue here}}
 </body>
 </html>
