@@ -17,6 +17,10 @@ var handlebars = handlebarsModule.create({defaultLayout:'main'});
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
+//disable application engine information
+app.disable('x-powered-by');
+
+
 //an app setter
 app.set('port', process.env.PORT || 3000);
 
@@ -61,7 +65,7 @@ app.get('/headers', function(req, res){
     }
 
     res.send(s);
-    //console.log(req.headers);
+    console.log(req.headers);
 });
 
 // ---- middlware -----
