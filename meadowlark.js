@@ -47,7 +47,6 @@ app.get('/about', function(req, res){
         pageTestScript: '/qa/tests-about.js'
     });
 });
-
 app.get('/tours/hood-river', function(req, res){
     res.render('tours/hood-river');
 });
@@ -66,6 +65,11 @@ app.get('/headers', function(req, res){
 
     res.send(s);
     console.log(req.headers);
+});
+
+//three.js route
+app.get('/three/:num', function(req, res){
+    res.sendFile(__dirname + '/public/threejs_' + req.params.num + '.html');
 });
 
 // ---- middlware -----
