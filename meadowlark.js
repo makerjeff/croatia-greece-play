@@ -20,13 +20,13 @@ app.set('view engine', 'handlebars');
 //disable application engine information
 app.disable('x-powered-by');
 
-
 //an app setter
 app.set('port', process.env.PORT || 3000);
 
 //debug log middleware (JWX)
 app.use(function(req,res,next){
-    console.log(req.url);
+    var output = req.url + ', ' + new Date();
+    console.log(output);
     next();
 });
 
@@ -66,6 +66,7 @@ app.get('/headers', function(req, res){
     res.send(s);
     console.log(req.headers);
 });
+
 
 //three.js route
 app.get('/three/:num', function(req, res){
