@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Example 01.01 - Basic Skeleton</title>
     <script src="/lib/three.min.js"></script>
+    <script src="/lib/stats.min.js"></script>
     <style>
         html, body {
             width: 100%;
@@ -20,6 +21,7 @@
 <body>
     <!-- where the webGL view will bind to -->
     <div id="WebGL-output"></div>
+    <div id="Stats-output"></div>
 
 <script>
     // window 'loaded' event
@@ -29,6 +31,8 @@
 
     //three.JS stuff
     function initThree(){
+        var stats = initStats();
+
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight, 0.1, 1000);
 
@@ -88,9 +92,42 @@
         scene.add(spotLight);
 
         document.getElementById('WebGL-output').appendChild(renderer.domElement);
-        renderer.render(scene, camera);
 
+        //loop the animation
+        renderScene();
+
+        //
+        var step = 0;
+
+        //setup scene for animation, do all animation here
+        function renderScene() {
+            stats.update();
+
+            //cubeMesh.rotation.x += 0.02;
+            cubeMesh.rotation.y += 0.02;
+            //cubeMesh.rotation.z += 0.02;
+
+            step += 0.04;
+            sphereMesh.position.x = 20 + (10*(Math.cos(step)));
+            sphereMesh.position.y = 2 + (10*Math.abs(Math.sin(step)));
+
+            //call next frame and render
+            requestAnimationFrame(renderScene);
+            renderer.render(scene, camera);
+        }
     }
+
+    function initStats() {
+        var stats = new Stats();
+        stats.setMode(0);
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.left = '0px';
+        stats.domElement.style.top = '0px';
+        document.getElementById('Stats-output').appendChild(stats.domElement);
+        return stats;
+    }
+
+
 </script>
 
 </body>

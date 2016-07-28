@@ -5,6 +5,7 @@
 
 var express = require('express');
 var app = express();
+var colors = require('colors');
 
 //grab fortune module
 var fortune = require('./lib/fortune.js');
@@ -25,7 +26,7 @@ app.set('port', process.env.PORT || 3000);
 
 //debug log middleware (JWX)
 app.use(function(req,res,next){
-    var output = req.url + ', ' + new Date();
+    var output = req.url + ', ' + new Date().toString().yellow;
     console.log(output);
     next();
 });
