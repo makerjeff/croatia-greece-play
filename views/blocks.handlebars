@@ -1,0 +1,23 @@
+<h1>Blocks Example</h1>
+
+<ul>
+    {{#each tours}}
+            {{! I'm in a new block, and context has changed }}
+            <li>
+                {{name}} - {{price}}
+                {{#if ../currencies}}
+                    {{! Jeff-chopped one '../' in the book example, because it was wrong}}
+                    ({{../currency.abbrev}})
+                {{/if}}
+            </li>
+        {{/each}}
+</ul>
+
+{{#unless currencies}}
+    <p>All prices in {{currency.name}}.</p>
+{{/unless}}
+
+{{#if specialsUrl}}
+    {{!I'm in a new block... but context hasn't changed (sort of?) }}
+    <p>Check out our <a href="{{specialsUrl}}">specials!</a></p>
+{{/if}}

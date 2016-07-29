@@ -26,7 +26,7 @@ app.set('port', process.env.PORT || 3000);
 
 //debug log middleware (JWX)
 app.use(function(req,res,next){
-    var output = req.url + ', ' + new Date().toString().yellow;
+    var output = req.url + ', by:' + req.host + ', ' + new Date().toString().yellow;
     console.log(output);
     next();
 });
@@ -72,6 +72,26 @@ app.get('/headers', function(req, res){
 //three.js route
 app.get('/three/:num', function(req, res){
     res.sendFile(__dirname + '/public/threejs_' + req.params.num + '.html');
+});
+
+//Blocks template example
+var blockObject = {
+    currency: {
+        name: 'United States dollars',
+        abbrev: 'USD'
+    },
+    tours: [
+        {name: 'Hood River', price: '$99.95'},
+        {name: 'Oregon Coast', price: '$159.95'},
+        {name: 'Los Angeles', price: '$299.95'},
+        {name: 'San Gabriel', price: '$129.95'}
+    ],
+    specialsUrl: '/january-specials',
+    currencies: ['USD','GBP','BTC']
+};
+
+app.get('/blocks', function(req, res){
+    res.render('blocks', blockObject);
 });
 
 // ---- middlware -----
