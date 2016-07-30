@@ -21,12 +21,15 @@ app.set('view engine', 'handlebars');
 //disable application engine information
 app.disable('x-powered-by');
 
+//enable view cache
+app.set('view-cache', true);
+
 //an app setter
 app.set('port', process.env.PORT || 3000);
 
 //debug log middleware (JWX)
 app.use(function(req,res,next){
-    var output = req.url + ', by:' + req.host + ', ' + new Date().toString().yellow;
+    var output = 'client request: ' + req.url.toString().blue + ', by:' + req.host + ', ' + new Date().toString().yellow;
     console.log(output);
     next();
 });
@@ -35,6 +38,15 @@ app.use(function(req,res,next){
 app.use(function(req,res,next){
     //res.locals is part of the 'context' that gets passed to views.(ch7)
     res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
+    next();
+});
+
+// middleware res.locals.partials injection
+app.use(function(req, res, next){
+    if(!res.locals.partials) {
+        res.locals.partials = {};
+    }
+    res.locals.partials.weather = JSON.stringify(getWeatherData()); //TODO: not working properly.
     next();
 });
 
@@ -87,14 +99,15 @@ var blockObject = {
         {name: 'San Gabriel', price: '$129.95'}
     ],
     specialsUrl: '/january-specials',
-    currencies: ['USD','GBP','BTC']
+    currencies: ['USD','GBP','BTC','HRK','EURO']
+    //videoGames: ['Assassin\'s Creed: Black Flag', 'Grand Theft Auto 5', 'Forza Motorsports']
 };
 
 app.get('/blocks', function(req, res){
     res.render('blocks', blockObject);
 });
 
-// ---- middlware -----
+/***** MIDDLEWARE *****/
 
 // serve static files
 app.use(express.static(__dirname + '/public'));
@@ -113,5 +126,35 @@ app.use(function(req,res,next){
 
 //using an app getter...
 app.listen(app.get('port'), function(){
-    console.log('Express started on http:localhost: ' + app.get('port') +'; press CTRL-C to terminate.');
+    console.log('Express started on http:localhost: ' + app.get('port') +'; ' + 'press CTRL-C to terminate.'.red);
 });
+
+
+//dummy functions and data getters
+function getWeatherData(){
+    return {
+        locations: [
+            {
+                name: 'Portland',
+                forecastUrl: 'http://www.wunderground.com/US/OR/Portland.html',
+                iconUrl: 'http:icons-ak.wxug.com/i/c/k/cloudy.gif',
+                weather: 'Overcast',
+                temp: '54.1 F (12.3 C)'
+            },
+            {
+                name: 'Bend',
+                forecastUrl: 'http://www.wunderground.com/US/OR/Bend.html',
+                iconUrl: 'http://icons-ak.wxug.com/i/c/k/partlycloudy.gif',
+                weather: 'Partly Cloudy',
+                temp: '55.0 F (12.8 C)'
+            },
+            {
+                name: 'Manzanita',
+                forecastUrl: 'http://www.wunderground.com/US/OR/Manzanita.html',
+                iconUrl: 'http://icons-ak.wxug.com/i/c/k/rain.gif',
+                weather: 'Light Rain',
+                temp: '55.0 F (12.8 C)'
+            }
+        ]
+    };
+}

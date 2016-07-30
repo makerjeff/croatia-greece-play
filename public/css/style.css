@@ -1,10 +1,20 @@
 html, body {
   width: 100%;
   height: 100%;
+
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  line-height: 1.5em;
 }
 
 blockquote {
   background: rgba(100,100,100,0.5);
   padding: 20px;
   border-radius: 5px;
+}
+
+.bolden {
+  font-weight: bold;
+  font-size: 1.2em;
+  font-style: italic;
 }
