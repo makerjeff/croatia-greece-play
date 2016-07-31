@@ -41,12 +41,19 @@ app.use(function(req,res,next){
     next();
 });
 
-// middleware res.locals.partials injection
+// middleware res.locals.partials
+//TODO: this does not work...
 app.use(function(req, res, next){
-    if(!res.locals.partials) {
-        res.locals.partials = {};
-    }
-    res.locals.partials.weather = JSON.stringify(getWeatherData()); //TODO: not working properly.
+    if(!res.locals.partials) res.locals.partials = {};
+    res.locals.partials.weather = getWeatherData();
+    next();
+});
+
+//TODO: but this does... why??
+app.use(function(req, res, next){
+    if(!res.locals.partials) res.locals.partials = {};
+    res.locals.partials.videoGames = getGameData();
+    console.log('partial videogame data: ' + res.locals.partials.videoGames);
     next();
 });
 
@@ -157,4 +164,29 @@ function getWeatherData(){
             }
         ]
     };
+}
+
+function getGameData() {
+    return {
+        videoGames: [
+            {
+                name: 'Assassins Creed',
+                developer: 'Ubisoft',
+                release: '2005',
+                description: 'A free-running game where you hunt treasures through time via genetic memories.'
+            },
+            {
+                name: 'Grand Theft Auto 5',
+                developer: 'Rockstar North',
+                release: '2014',
+                description: 'Do all the bad things you\'ve wanted to do without getting arrested or killed.'
+            },
+            {
+                name: 'Forza Motorsports',
+                developer: 'Turn 10',
+                release: '2003',
+                description: 'Practice driving in this GranTourismo competitor.'
+            }
+        ]
+    }
 }
