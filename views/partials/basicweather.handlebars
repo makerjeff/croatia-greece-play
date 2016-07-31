@@ -1,0 +1,14 @@
+
+{{#if partials.basicWeather.locations}}
+    <div class="basicWeather">
+        {{#each partials.basicWeather.locations}}
+
+            <a href="{{url}}">
+                <div class="basicLocations">
+                    {{name}}, {{weather}}, {{temp}}
+                </div>
+            </a>
+
+        {{/each}}
+    </div>
+{{/if}}

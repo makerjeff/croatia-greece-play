@@ -45,7 +45,7 @@ app.use(function(req,res,next){
 //TODO: this does not work...
 app.use(function(req, res, next){
     if(!res.locals.partials) res.locals.partials = {};
-    res.locals.partials.weather = getWeatherData();
+    res.locals.partials.weather = getWeatherData2();
     next();
 });
 
@@ -53,7 +53,14 @@ app.use(function(req, res, next){
 app.use(function(req, res, next){
     if(!res.locals.partials) res.locals.partials = {};
     res.locals.partials.videoGames = getGameData();
-    console.log('partial videogame data: ' + res.locals.partials.videoGames);
+    //console.log('partial videogame data: ' + res.locals.partials.videoGames);
+    next();
+});
+
+//TODO: lets add another basic one
+app.use(function(req,res,next){
+    if(!res.locals.partials) res.locals.partials = {};
+    res.locals.partials.basicWeather = getBasicWeatherData();
     next();
 });
 
@@ -138,6 +145,35 @@ app.listen(app.get('port'), function(){
 
 
 //dummy functions and data getters
+
+function getWeatherData2(){
+    return {
+        locations: [
+            {
+                name:'Los Angeles',
+                forecastUrl: '',
+                iconUrl: '',
+                weather: 'Perpetually Sunny',
+                temp: '74 F'
+            },
+            {
+                name: 'San Gabriel',
+                forecastUrl: '',
+                iconUrl: '',
+                weather: 'A little smoggy, but alright.',
+                temp: '82 F'
+            },
+            {
+                name: 'Alhambra',
+                forecastUrl: '',
+                iconUrl: '',
+                weather: 'Just peachy.',
+                temp: ' 72 F'
+            }
+        ]
+    }
+}
+
 function getWeatherData(){
     return {
         locations: [
@@ -163,7 +199,7 @@ function getWeatherData(){
                 temp: '55.0 F (12.8 C)'
             }
         ]
-    };
+    }
 }
 
 function getGameData() {
@@ -186,6 +222,31 @@ function getGameData() {
                 developer: 'Turn 10',
                 release: '2003',
                 description: 'Practice driving in this GranTourismo competitor.'
+            }
+        ]
+    }
+}
+
+function getBasicWeatherData(){
+    return {
+        locations: [
+            {
+                name: 'Los Angeles',
+                weather: 'Sunny',
+                temp: '96 F',
+                url: 'http://localhost:3000/los angeles'
+            },
+            {
+                name: 'San Gabriel',
+                weather: 'Sunny',
+                temp: '100 F',
+                url: 'http://localhost:3000/san gabriel'
+            },
+            {
+                name: 'Alhambra',
+                weather: 'Sunny',
+                temp: '102 F',
+                url: 'http://localhost:3000/alhambra'
             }
         ]
     }
