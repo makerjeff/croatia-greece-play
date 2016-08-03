@@ -9,6 +9,8 @@ var colors = require('colors');
 
 //grab fortune module
 var fortune = require('./lib/fortune.js');
+//grab dummyDataModule
+var dummyData = require('./lib/dummyData.js');
 
 //set up Handlebars as view engine
 // var handlebars = require('express-handlebars').create({defaultLayout:'main});
@@ -52,15 +54,15 @@ app.use(function(req, res, next){
 //TODO: but this does... why??
 app.use(function(req, res, next){
     if(!res.locals.partials) res.locals.partials = {};
-    res.locals.partials.videoGames = getGameData();
-    //console.log('partial videogame data: ' + res.locals.partials.videoGames);
+    res.locals.partials.videoGames = dummyData.getGameData();
     next();
 });
 
 //TODO: lets add another basic one
 app.use(function(req,res,next){
     if(!res.locals.partials) res.locals.partials = {};
-    res.locals.partials.basicWeather = getBasicWeatherData();
+    //res.locals.partials.basicWeather = getBasicWeatherData();
+    res.locals.partials.basicWeather = dummyData.getBasicWeatherData();
     next();
 });
 
@@ -222,31 +224,6 @@ function getGameData() {
                 developer: 'Turn 10',
                 release: '2003',
                 description: 'Practice driving in this GranTourismo competitor.'
-            }
-        ]
-    }
-}
-
-function getBasicWeatherData(){
-    return {
-        locations: [
-            {
-                name: 'Los Angeles',
-                weather: 'Sunny',
-                temp: '96 F',
-                url: 'http://localhost:3000/los angeles'
-            },
-            {
-                name: 'San Gabriel',
-                weather: 'Sunny',
-                temp: '100 F',
-                url: 'http://localhost:3000/san gabriel'
-            },
-            {
-                name: 'Alhambra',
-                weather: 'Sunny',
-                temp: '102 F',
-                url: 'http://localhost:3000/alhambra'
             }
         ]
     }

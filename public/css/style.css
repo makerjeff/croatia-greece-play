@@ -2,6 +2,9 @@ html, body {
   width: 100%;
   height: 100%;
 
+  margin: 0;
+  padding: 0;
+
   font-family: 'Arial', sans-serif;
   font-size: 16px;
   line-height: 1.5em;
@@ -13,12 +16,27 @@ blockquote {
   border-radius: 5px;
 }
 
+/*main: contact link, aka Footer*/
+.contact {
+  display: flex;
+  font-family: "Arial Black", sans-serif;
+  text-decoration: none;
+  text-transform: uppercase;
+  position: relative;
+  width: 100%;
+  height: 100px;
+  background: rgba(100,100,255,0.2);
+  justify-content: center;
+  align-items: center;
+}
+
 .bolden {
   font-weight: bold;
   font-size: 1.2em;
   font-style: italic;
 }
 
+/*list of games*/
 .games {
   margin: 10px;
   padding: 15px 20px 20px 20px;
@@ -30,3 +48,4 @@ blockquote {
   border-radius: 5px;
   box-shadow: 1px 2px 2px rgba(100,100,100,0.2);
 }
+

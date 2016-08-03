@@ -22,6 +22,12 @@ To load the Three.JS examples:
     - chai
     - zombie (downgraded to 2.5.1 to work with book, new version might have their own 'assert' methods now)
 - including JSHint.
+- Types of views:
+    - Layouts (frontend)
+    - Views (frontend)
+    - Blocks (backend data)
+    - Partials
+    - Sections
 
 #Notes Three.JS
 
