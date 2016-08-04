@@ -6,6 +6,7 @@
 var express = require('express');
 var app = express();
 var colors = require('colors');
+var bodyparser = require('body-parser');
 
 //grab custom modules
 var fortune = require('./lib/fortune.js');
@@ -55,7 +56,11 @@ app.use(function(req,res,next){
     next();
 });
 
-// ---- MIDDLEWARE ---- 
+// ---- MIDDLEWARE ----
+//for POST submissions
+app.use(bodyparser.urlencoded());   //updated since book
+//app.use(bodyparser.json()); //updated since book
+
 // for PARTIALS res.locals.partials
 app.use(function(req, res, next){
     if(!res.locals.partials) res.locals.partials = {};
@@ -147,6 +152,55 @@ app.get('/data/nursery', function(req,res){
         adjective: nursery.getRandomAdjective(),
         noun: nursery.getRandomNoun()
     });
+});
+
+// ---- newsletter related ----
+
+//standard version
+app.get('/newsletter', function(req,res){
+    res.render('newsletter', {csrf: 'CSRF token goes here'});
+});
+//ajax version
+app.get('/newsletter-ajax', function(req,res){
+    res.render('newsletter-ajax', {csrf: 'CSRF token goes here, ajax.'});
+});
+
+app.post('/process', function(req,res){
+    console.log('Form (from query string): ' + req.query.form);
+    console.log('CSRF token (from hidden form field): ' + req.body._csrf);
+    console.log('Name (from visible form field): ' + req.body.name);
+    console.log('Email (from visible form field): ' + req.body.email);
+
+    //store info to universal context
+    if(!res.locals.formData) res.locals.formData = {};
+    res.locals.formData.name = req.body.name;
+    res.locals.formData.email = req.body.email;
+
+    app.set('formUser', res.locals.formData.name);
+    app.set('formEmail', res.locals.formData.email);
+    res.redirect(303, '/thank-you');
+});
+
+//ajax
+app.post('/process-ajax', function(req,res){
+    //convenience properties 
+    if(req.xhr || req.accepts('json,html') === 'json'){
+        //add error catching if you need to here...
+
+        //ajax data.success = true
+        res.send({success: true});
+    } else {
+        res.redirect(303, '/thank-you');
+    }
+});
+
+app.get('/thank-you', function(req,res){
+    // res.render('thank-you', {
+    //     name: res.locals.formData.name,
+    //     email: res.locals.formData.email
+    // });
+
+    res.render('thank-you', {name: app.get('formUser'), email:app.get('formEmail')});
 });
 
 /***** Catch-Alls *****/

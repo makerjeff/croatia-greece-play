@@ -31,6 +31,11 @@ To load the Three.JS examples:
 - adding 'Nursery'
     - Give up and just use JQuery. You already know a lot of the basics using vanilla JS.
     - Anything you do in JQuery, learn how to do in vanilla JS.
+- added Bootstrap to the project for Forms.
+
+- passing form data to another page (DON'T USE, THIS IS GLOBAL! use cookies or sessions instead):
+    - use 'app.set('(var name)', (var value));
+    - use 'app.get('(var name)');
 
 #Notes Three.JS
 
