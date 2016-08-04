@@ -7,10 +7,11 @@ var express = require('express');
 var app = express();
 var colors = require('colors');
 
-//grab fortune module
+//grab custom modules
 var fortune = require('./lib/fortune.js');
-//grab dummyDataModule
-var dummyData = require('./lib/dummyData.js');
+
+//grab dummyDataModule (model)
+var dummyData = require('./models/dummyData.js');
 
 //set up Handlebars as view engine
 // var handlebars = require('express-handlebars').create({defaultLayout:'main});
@@ -29,7 +30,8 @@ app.set('view-cache', true);
 //an app setter
 app.set('port', process.env.PORT || 3000);
 
-//debug log middleware (JWX)
+
+// //debug log middleware (JWX)
 app.use(function(req,res,next){
     var output = 'client request: ' + req.url.toString().blue + ', by:' + req.host + ', ' + new Date().toString().yellow;
     console.log(output);
@@ -43,22 +45,18 @@ app.use(function(req,res,next){
     next();
 });
 
-// middleware res.locals.partials
-//TODO: this does not work with a partial named 'weather', but will work with an exact template file named 'weather2'.
+// ---- MIDDLEWARE ---- 
+// for PARTIALS res.locals.partials
 app.use(function(req, res, next){
     if(!res.locals.partials) res.locals.partials = {};
     res.locals.partials.weather = dummyData.getWeatherData();
     next();
 });
-
-//TODO: but this does... why??
 app.use(function(req, res, next){
     if(!res.locals.partials) res.locals.partials = {};
     res.locals.partials.videoGames = dummyData.getGameData();
     next();
 });
-
-//TODO: lets add another basic one
 app.use(function(req,res,next){
     if(!res.locals.partials) res.locals.partials = {};
     //res.locals.partials.basicWeather = getBasicWeatherData();
