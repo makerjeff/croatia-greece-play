@@ -16,6 +16,10 @@ blockquote {
   border-radius: 5px;
 }
 
+a {
+  text-decoration: none;
+}
+
 /*main: contact link, aka Footer*/
 .contact {
   display: flex;

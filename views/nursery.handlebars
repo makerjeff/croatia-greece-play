@@ -2,9 +2,10 @@
     <script src="/lib/handlebars.min.js"></script>
 
     <!-- note the backslash escapes: needed otherwise server will process -->
+    <!--type=text/x-handlebars-template-->
     <script id="nurseryRhymeTemplate" type="text/x-handlebars-template">
-        Marry had a little <b>\{{animal}}, </b>, its <b>\{{bodyPart}}</b>
-        was <b>\{{adjective}}</b> as <b>\{{noun}}</b>
+        Marry had a little <b>\{{animal}}</b>, its <b>\{{bodyPart}}</b>
+        was <b>\{{adjective}}</b> as <b>\{{noun}}</b>.
     </script>
 
     <!-- load JQuery-->
@@ -12,14 +13,14 @@
 </head>
 
 <body>
-<div id="nurseryRhyme">Click a button...</div>
-<hr>
+<div id="nurseryRhyme">Click a button...</div><hr>
 <button id="btnNurseryRhyme">Generate a nursery rhyme</button>
-<button id="btnNurseryRhymeAjax">Generage a nursery rhyme from AJAX</button>
-
+<button id="btnNurseryRhymeAjax">Generate a nursery rhyme from AJAX</button>
 
 <script>
+    // ---- JQuery version (use) ----
     $(document).ready(function(){
+        //returns a function that returns the "#nurseryRhymeTemplate" script template
         var nurseryRhymeTemplate = Handlebars.compile($('#nurseryRhymeTemplate').html());
         var $nurseryRhyme = $('#nurseryRhyme');
 
@@ -37,13 +38,13 @@
         $('#btnNurseryRhymeAjax').on('click', function(e){
             e.preventDefault();
 
+            //use JQuery AjAX
             $.ajax('/data/nursery', {
                 success: function(data){
                     $nurseryRhyme.html(nurseryRhymeTemplate(data));
                 }
             });
         });
-
     });
 </script>
 </body>

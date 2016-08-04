@@ -28,6 +28,9 @@ To load the Three.JS examples:
     - Blocks (backend data)
     - Partials
     - Sections
+- adding 'Nursery'
+    - Give up and just use JQuery. You already know a lot of the basics using vanilla JS.
+    - Anything you do in JQuery, learn how to do in vanilla JS.
 
 #Notes Three.JS
 
