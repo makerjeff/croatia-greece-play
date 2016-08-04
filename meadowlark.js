@@ -44,10 +44,10 @@ app.use(function(req,res,next){
 });
 
 // middleware res.locals.partials
-//TODO: this does not work...
+//TODO: this does not work with a partial named 'weather', but will work with an exact template file named 'weather2'.
 app.use(function(req, res, next){
     if(!res.locals.partials) res.locals.partials = {};
-    res.locals.partials.weather = getWeatherData2();
+    res.locals.partials.weather = dummyData.getWeatherData();
     next();
 });
 
@@ -146,85 +146,4 @@ app.listen(app.get('port'), function(){
 });
 
 
-//dummy functions and data getters
-
-function getWeatherData2(){
-    return {
-        locations: [
-            {
-                name:'Los Angeles',
-                forecastUrl: '',
-                iconUrl: '',
-                weather: 'Perpetually Sunny',
-                temp: '74 F'
-            },
-            {
-                name: 'San Gabriel',
-                forecastUrl: '',
-                iconUrl: '',
-                weather: 'A little smoggy, but alright.',
-                temp: '82 F'
-            },
-            {
-                name: 'Alhambra',
-                forecastUrl: '',
-                iconUrl: '',
-                weather: 'Just peachy.',
-                temp: ' 72 F'
-            }
-        ]
-    }
-}
-
-function getWeatherData(){
-    return {
-        locations: [
-            {
-                name: 'Portland',
-                forecastUrl: 'http://www.wunderground.com/US/OR/Portland.html',
-                iconUrl: 'http:icons-ak.wxug.com/i/c/k/cloudy.gif',
-                weather: 'Overcast',
-                temp: '54.1 F (12.3 C)'
-            },
-            {
-                name: 'Bend',
-                forecastUrl: 'http://www.wunderground.com/US/OR/Bend.html',
-                iconUrl: 'http://icons-ak.wxug.com/i/c/k/partlycloudy.gif',
-                weather: 'Partly Cloudy',
-                temp: '55.0 F (12.8 C)'
-            },
-            {
-                name: 'Manzanita',
-                forecastUrl: 'http://www.wunderground.com/US/OR/Manzanita.html',
-                iconUrl: 'http://icons-ak.wxug.com/i/c/k/rain.gif',
-                weather: 'Light Rain',
-                temp: '55.0 F (12.8 C)'
-            }
-        ]
-    }
-}
-
-function getGameData() {
-    return {
-        videoGames: [
-            {
-                name: 'Assassins Creed',
-                developer: 'Ubisoft',
-                release: '2005',
-                description: 'A free-running game where you hunt treasures through time via genetic memories.'
-            },
-            {
-                name: 'Grand Theft Auto 5',
-                developer: 'Rockstar North',
-                release: '2014',
-                description: 'Do all the bad things you\'ve wanted to do without getting arrested or killed.'
-            },
-            {
-                name: 'Forza Motorsports',
-                developer: 'Turn 10',
-                release: '2003',
-                description: 'Practice driving in this GranTourismo competitor.'
-            }
-        ]
-    }
-}
+//dummy functions and data getters (2016.AUG.03, externalized to its own module);

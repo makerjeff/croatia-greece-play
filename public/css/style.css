@@ -11,7 +11,7 @@ html, body {
 }
 
 blockquote {
-  background: rgba(100,100,100,0.5);
+  background: rgba(200,200,100,0.2);
   padding: 20px;
   border-radius: 5px;
 }
@@ -37,7 +37,7 @@ blockquote {
 }
 
 /*list of games*/
-.games {
+.game {
   margin: 10px;
   padding: 15px 20px 20px 20px;
   position: relative;

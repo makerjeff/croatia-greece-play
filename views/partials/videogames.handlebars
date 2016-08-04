@@ -1,8 +1,17 @@
 <div class="videoGames">
     {{#each partials.videoGames.videoGames}}
-        <div class="games">
+        <div class="game">
             <h3>{{name}}</h3>
-            <p>{{developer}}, {{release}}</p>
+
+            {{#if developerUrl}}
+                <p><a href="{{developerUrl}}">{{developer}}</a>, {{release}}</p>
+
+            {{else}}
+                <p>{{developer}}, {{release}}</p>
+            {{/if}}
+
+
+
             <p>{{description}}</p>
         </div>
     {{/each}}
