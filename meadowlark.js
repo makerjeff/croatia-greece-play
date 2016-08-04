@@ -134,6 +134,20 @@ app.get('/blocks', function(req, res){
     res.render('blocks', blockObject);
 });
 
+// nursery rhyme related
+app.get('/nursery', function(req,res){
+    res.render('nursery');
+});
+
+app.get('/data/nursery', function(req,res){
+    res.json({
+        animal: 'squirrel',
+        bodyPart: 'tail',
+        adjective: 'bushy',
+        noun: 'heck'
+    });
+});
+
 /***** Catch-Alls *****/
 
 // serve static files
