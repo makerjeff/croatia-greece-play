@@ -1,0 +1,17 @@
+{{!TODO; NOT WORKING, but skipping to client-side Handlebars through AJAX}}
+
+{{#section 'head'}}
+    <!-- google robots to ignore -->
+    <meta name="robots" content="noindex">
+{{/section}}
+
+<h1>Test Page</h1>
+<p>We're just testing some JQuery stuff.</p>
+
+{{#section 'jquery'}}
+    <script>
+        $('document').ready(function(){
+            $('h1').html('JQuery Works.');
+        });
+    </script>
+{{/section}}

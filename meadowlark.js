@@ -16,7 +16,16 @@ var dummyData = require('./models/dummyData.js');
 //set up Handlebars as view engine
 // var handlebars = require('express-handlebars').create({defaultLayout:'main});
 var handlebarsModule = require('express-handlebars');
-var handlebars = handlebarsModule.create({defaultLayout:'main'});
+var handlebars = handlebarsModule.create({
+    defaultLayout:'main',
+    helpers: {
+        section: function(name, options) {
+            if(!this._sections) this._sections = {};
+            this._sections[name] = options.fn(this);
+            return null;
+        }
+    }
+});
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -59,7 +68,6 @@ app.use(function(req, res, next){
 });
 app.use(function(req,res,next){
     if(!res.locals.partials) res.locals.partials = {};
-    //res.locals.partials.basicWeather = getBasicWeatherData();
     res.locals.partials.basicWeather = dummyData.getBasicWeatherData();
     next();
 });
@@ -94,6 +102,10 @@ app.get('/headers', function(req, res){
     console.log(req.headers);
 });
 
+//different layout test route
+app.get('/foo', function(req,res){
+    res.render(blocks, blockObject );
+});
 
 //three.js route
 app.get('/three/:num', function(req, res){
@@ -102,6 +114,7 @@ app.get('/three/:num', function(req, res){
 
 //Blocks template example
 var blockObject = {
+    //layout: null,
     currency: {
         name: 'United States dollars',
         abbrev: 'USD'
@@ -121,7 +134,7 @@ app.get('/blocks', function(req, res){
     res.render('blocks', blockObject);
 });
 
-/***** MIDDLEWARE *****/
+/***** Catch-Alls *****/
 
 // serve static files
 app.use(express.static(__dirname + '/public'));
@@ -138,10 +151,7 @@ app.use(function(req,res,next){
     res.render('500');
 });
 
-//using an app getter...
+//using an app getter then running the 'listen()' function.
 app.listen(app.get('port'), function(){
     console.log('Express started on http:localhost: ' + app.get('port') +'; ' + 'press CTRL-C to terminate.'.red);
 });
-
-
-//dummy functions and data getters (2016.AUG.03, externalized to its own module);

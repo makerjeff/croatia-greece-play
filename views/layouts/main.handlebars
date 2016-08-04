@@ -11,12 +11,16 @@
     {{! use JQuery for assertions }}
     <script src="/lib/jquery.min.js"></script>
 
+    <!--injected header section-->
+    {{{_sections.head}}}
+
 </head>
 <body>
 <header>
     <img src="/img/logo.jpg" alt="Meadlark Travel Logo">
 </header>
     {{{body}}}
+    {{{_sections.jquery}}}
 
 <div class="contact">
     <a href="/contact">contact (on main layout)</a>

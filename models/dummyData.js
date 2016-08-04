@@ -1,6 +1,7 @@
 /**
  * Created by jeffersonwu on 8/3/16.
- * moving all dummy databse data to this module
+ * moving all dummy database data to this module.
+ * future will be home for data getters and DB manipulators.
  */
 
 var weatherData = {
