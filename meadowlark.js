@@ -9,6 +9,7 @@ var colors = require('colors');
 
 //grab custom modules
 var fortune = require('./lib/fortune.js');
+var nursery = require('./lib/nursery.js');
 
 //grab dummyDataModule (model)
 var dummyData = require('./models/dummyData.js');
@@ -141,10 +142,10 @@ app.get('/nursery', function(req,res){
 
 app.get('/data/nursery', function(req,res){
     res.json({
-        animal: 'squirrel',
-        bodyPart: 'tail',
-        adjective: 'bushy',
-        noun: 'heck'
+        animal: nursery.getRandomAnimal(),
+        bodyPart: nursery.getRandomBodyPart(),
+        adjective: nursery.getRandomAdjective(),
+        noun: nursery.getRandomNoun()
     });
 });
 
@@ -167,5 +168,5 @@ app.use(function(req,res,next){
 
 //using an app getter then running the 'listen()' function.
 app.listen(app.get('port'), function(){
-    console.log('Express started on http:localhost: ' + app.get('port') +'; ' + 'press CTRL-C to terminate.'.red);
+    console.log('Express started on http://localhost: ' + app.get('port') +'; ' + 'press CTRL-C to terminate.'.red);
 });
