@@ -6547,7 +6547,7 @@ exports.getError = function(err) {
 /**
  * @summary
  * This Filter based on `mocha-clean` module.(see: `github.com/rstacruz/mocha-clean`)
- * @description
+ * @alt
  * When invoking this function you get a filter function that get the Error.stack as an input,
  * and return a prettify output.
  * (i.e: strip Mocha and internal node functions from stack trace).
@@ -12802,7 +12802,7 @@ function formatValue(ctx, value, recurseTimes) {
   // IE doesn't make error fields non-enumerable
   // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
   if (isError(value)
-      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
+      && (keys.indexOf('message') >= 0 || keys.indexOf('alt') >= 0)) {
     return formatError(value);
   }
 

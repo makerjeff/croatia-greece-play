@@ -1,8 +1,9 @@
 <div class="weatherWidget">
+    <h2>Local Weather</h2>
     {{#each partials.weather.locations}}
         <div class="location">
             <h3>{{name}}</h3>
-            <a href="{{forecastUrl}}">
+            <a href="{{forecastUrl}}" target="_blank">
                 <img src="{{iconUrl}}" alt="{{weather}}">
                 {{weather}}, {{temp}}
             </a>

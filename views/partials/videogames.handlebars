@@ -1,17 +1,14 @@
 <div class="videoGames">
+
+    <h2>Favorite Games</h2>
     {{#each partials.videoGames.videoGames}}
         <div class="game">
-            <h3>{{name}}</h3>
-
+            <h4>{{name}}</h4>
             {{#if developerUrl}}
                 <p><a href="{{developerUrl}}">{{developer}}</a>, {{release}}</p>
-
             {{else}}
                 <p>{{developer}}, {{release}}</p>
             {{/if}}
-
-
-
             <p>{{description}}</p>
         </div>
     {{/each}}

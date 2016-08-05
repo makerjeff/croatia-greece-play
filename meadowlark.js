@@ -3,6 +3,7 @@
  * First Express based server, entry point to web app.
  */
 
+/* #################### MODULES #################### */
 var express = require('express');
 var app = express();
 var colors = require('colors');
@@ -11,10 +12,12 @@ var bodyparser = require('body-parser');
 //grab custom modules
 var fortune = require('./lib/fortune.js');
 var nursery = require('./lib/nursery.js');
+var navlinks = require('./models/navlinks.js');
 
 //grab dummyDataModule (model)
 var dummyData = require('./models/dummyData.js');
 
+/* #################### SETUP #################### */
 //set up Handlebars as view engine
 // var handlebars = require('express-handlebars').create({defaultLayout:'main});
 var handlebarsModule = require('express-handlebars');
@@ -42,6 +45,7 @@ app.set('view-cache', true);
 app.set('port', process.env.PORT || 3000);
 
 
+/* #################### MIDDLEWARE #################### */
 // //debug log middleware (JWX)
 app.use(function(req,res,next){
     var output = 'client request: ' + req.url.toString().blue + ', by:' + req.host + ', ' + new Date().toString().yellow;
@@ -55,30 +59,37 @@ app.use(function(req,res,next){
     res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
     next();
 });
-
-// ---- MIDDLEWARE ----
 //for POST submissions
-app.use(bodyparser.urlencoded());   //updated since book
-//app.use(bodyparser.json()); //updated since book
+app.use(bodyparser.json()); //updated past book
+app.use(bodyparser.urlencoded({extended: false}));   //updated past book
 
-// for PARTIALS res.locals.partials
+// =====  PARTIALS ===== (res.locals.partials)
 app.use(function(req, res, next){
     if(!res.locals.partials) res.locals.partials = {};
     res.locals.partials.weather = dummyData.getWeatherData();
     next();
 });
+// ---- videogame data ----
 app.use(function(req, res, next){
     if(!res.locals.partials) res.locals.partials = {};
     res.locals.partials.videoGames = dummyData.getGameData();
     next();
 });
+// ---- basic weather data ----
 app.use(function(req,res,next){
     if(!res.locals.partials) res.locals.partials = {};
     res.locals.partials.basicWeather = dummyData.getBasicWeatherData();
+    //console.log(res.locals.partials.basicWeather);
+    next();
+});
+// ---- navigation links ----
+app.use(function(req,res,next){
+    if(!res.locals.partials) res.locals.partials = {};
+    res.locals.partials.navlinks = navlinks.getNavLinks();
     next();
 });
 
-// ---- routes ----
+/* #################### ROUTES #################### */
 app.get('/', function(req, res){
     res.render('home');
 });
@@ -110,7 +121,7 @@ app.get('/headers', function(req, res){
 
 //different layout test route
 app.get('/foo', function(req,res){
-    res.render(blocks, blockObject );
+    res.render('blocks', blockObject );
 });
 
 //three.js route
@@ -132,8 +143,7 @@ var blockObject = {
         {name: 'San Gabriel', price: '$129.95'}
     ],
     specialsUrl: '/january-specials',
-    currencies: ['USD','GBP','BTC','HRK','EURO']
-    //videoGames: ['Assassin\'s Creed: Black Flag', 'Grand Theft Auto 5', 'Forza Motorsports']
+    currencies: ['USD','GBP','BTC','HRK','EURO','TB']
 };
 
 app.get('/blocks', function(req, res){
@@ -183,7 +193,7 @@ app.post('/process', function(req,res){
 
 //ajax
 app.post('/process-ajax', function(req,res){
-    //convenience properties 
+    //convenience properties
     if(req.xhr || req.accepts('json,html') === 'json'){
         //add error catching if you need to here...
 
@@ -220,6 +230,7 @@ app.use(function(req,res,next){
     res.render('500');
 });
 
+/* #################### START SERVER #################### */
 //using an app getter then running the 'listen()' function.
 app.listen(app.get('port'), function(){
     console.log('Express started on http://localhost: ' + app.get('port') +'; ' + 'press CTRL-C to terminate.'.red);

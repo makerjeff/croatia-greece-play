@@ -36,6 +36,8 @@ To load the Three.JS examples:
 - passing form data to another page (DON'T USE, THIS IS GLOBAL! use cookies or sessions instead):
     - use 'app.set('(var name)', (var value));
     - use 'app.get('(var name)');
+    
+- Externalizing Credentials: Cookies and Sessions
 
 #Notes Three.JS
 

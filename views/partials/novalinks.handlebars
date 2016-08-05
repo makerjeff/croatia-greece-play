@@ -1,0 +1,10 @@
+
+{{#if partials.navlinks}}
+    {{#each partials.navlinks.links}}
+        <a href="{{url}}"><button class="btn btn-primary">{{text}}</button></a>
+    {{/each}}
+
+{{else}}
+    <h5>(no link data)</h5>
+
+{{/if}}

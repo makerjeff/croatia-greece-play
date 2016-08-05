@@ -4948,10 +4948,10 @@ function formatValue(ctx, value, recurseTimes) {
 
   // Some type of object without properties can be shortcutted.
   // In IE, errors have a single `stack` property, or if they are vanilla `Error`,
-  // a `stack` plus `description` property; ignore those for consistency.
+  // a `stack` plus `alt` property; ignore those for consistency.
   if (keys.length === 0 || (isError(value) && (
       (keys.length === 1 && keys[0] === 'stack') ||
-      (keys.length === 2 && keys[0] === 'description' && keys[1] === 'stack')
+      (keys.length === 2 && keys[0] === 'alt' && keys[1] === 'stack')
      ))) {
     if (typeof value === 'function') {
       var name = getName(value);
