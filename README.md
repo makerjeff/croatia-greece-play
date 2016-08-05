@@ -38,6 +38,7 @@ To load the Three.JS examples:
     - use 'app.get('(var name)');
     
 - Externalizing Credentials: Cookies and Sessions
+    - USE SIGNED COOKIES, PERIOD.
 
 #Notes Three.JS
 

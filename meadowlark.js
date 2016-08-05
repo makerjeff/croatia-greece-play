@@ -129,37 +129,35 @@ app.get('/foo', function(req,res){
     res.render('blocks', blockObject );
 });
 
-//cookies debug
-//TODO: need to make a reader.
+//----- cookies debug -----
+//read cookies
 app.get('/cookie-read', function(req,res){
     console.log('cookie: ' + req.cookies.monster);
     res.send('monster: ' + req.cookies.monster);
 });
-
 app.get('/cookie-signed-read', function(req,res){
     console.log('signed cookie: ' + req.signedCookies.signed_monster);
     res.send('signed_monster: ' + req.signedCookies.signed_monster);
 });
 
+//clear cookies
 app.get('/cookie-clear', function(req,res){
     res.clearCookie('monster');
     console.log('cookie cleared!');
     res.send('cookie cleared!');
 });
-
 app.get('/cookie-signed-clear', function(req, res){
     res.clearCookie('signed_monster');
     console.log('signed cookie cleared!');
     res.send('signed cookie cleared!');
 });
 
-//res.cookie(name , 'value', {expire : new Date() + 9999});
+//set cookies
 app.get('/cookie-set/:cookie', function(req,res){
     console.log(req.params.cookie);
     res.cookie('monster', req.params.cookie, {expire: new Date() + 5000});
     res.send('monster cookie was set: ' + req.params.cookie);
 });
-
 app.get('/cookie-signed-set/:cookie', function(req,res){
     res.cookie('signed_monster', req.params.cookie, {signed: true});
     res.send('signed monster cookie was set: ' + req.params.cookie);
