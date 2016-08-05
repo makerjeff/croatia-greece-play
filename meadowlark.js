@@ -7,12 +7,14 @@
 var express = require('express');
 var app = express();
 var colors = require('colors');
-var bodyparser = require('body-parser');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 
 //grab custom modules
 var fortune = require('./lib/fortune.js');
 var nursery = require('./lib/nursery.js');
 var navlinks = require('./models/navlinks.js');
+var credentials = require('./credentials.js');
 
 //grab dummyDataModule (model)
 var dummyData = require('./models/dummyData.js');
@@ -60,8 +62,11 @@ app.use(function(req,res,next){
     next();
 });
 //for POST submissions
-app.use(bodyparser.json()); //updated past book
-app.use(bodyparser.urlencoded({extended: false}));   //updated past book
+app.use(bodyParser.json()); //updated past book
+app.use(bodyParser.urlencoded({extended: false}));   //updated past book
+
+//for cookies (modified from book)
+app.use(cookieParser(credentials.cookieSecret));
 
 // =====  PARTIALS ===== (res.locals.partials)
 app.use(function(req, res, next){
@@ -119,9 +124,45 @@ app.get('/headers', function(req, res){
     console.log(req.headers);
 });
 
-//different layout test route
+//layout debug
 app.get('/foo', function(req,res){
     res.render('blocks', blockObject );
+});
+
+//cookies debug
+//TODO: need to make a reader.
+app.get('/cookie-read', function(req,res){
+    console.log('cookie: ' + req.cookies.monster);
+    res.send('monster: ' + req.cookies.monster);
+});
+
+app.get('/cookie-signed-read', function(req,res){
+    console.log('signed cookie: ' + req.signedCookies.signed_monster);
+    res.send('signed_monster: ' + req.signedCookies.signed_monster);
+});
+
+app.get('/cookie-clear', function(req,res){
+    res.clearCookie('monster');
+    console.log('cookie cleared!');
+    res.send('cookie cleared!');
+});
+
+app.get('/cookie-signed-clear', function(req, res){
+    res.clearCookie('signed_monster');
+    console.log('signed cookie cleared!');
+    res.send('signed cookie cleared!');
+});
+
+//res.cookie(name , 'value', {expire : new Date() + 9999});
+app.get('/cookie-set/:cookie', function(req,res){
+    console.log(req.params.cookie);
+    res.cookie('monster', req.params.cookie, {expire: new Date() + 5000});
+    res.send('monster cookie was set: ' + req.params.cookie);
+});
+
+app.get('/cookie-signed-set/:cookie', function(req,res){
+    res.cookie('signed_monster', req.params.cookie, {signed: true});
+    res.send('signed monster cookie was set: ' + req.params.cookie);
 });
 
 //three.js route
