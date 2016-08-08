@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>deviceOrientation</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+
+        #container {
+            position: relative;
+            width: 100%;
+        }
+
+        #imageResult {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<h1>Device Orientation</h1>
+
+<div id="container">
+    <div class="valueHolder"> compass heading: <span id="valueOne">dummyVal 1</span></div>
+    <div class="valueHolder"> tilt: <span id="valueTwo">dummyVal 1</span></div>
+    <div class="valueHolder"> roll: <span id="valueThree">dummyVal 1</span></div>
+
+    <div id="imageResult"></div>
+
+
+</div>
+
+<script>
+
+    //10 different locations (dummy)
+    var locations = [
+        {name: 'castle', imgUrl: '/img/expedia/pic_01.jpg'},
+        {name: 'dock', imgUrl: '/img/expedia/pic_02.jpg'},
+        {name: 'water bird', imgUrl: '/img/expedia/pic_03.jpg'},
+        {name: 'elephant', imgUrl: '/img/expedia/pic_04.jpg'},
+        {name: 'space cat', imgUrl: '/img/expedia/pic_05.jpg'},
+        {name: 'murdered leaf', imgUrl: '/img/expedia/pic_06.jpg'},
+        {name: 'eyeball texture', imgUrl: '/img/expedia/pic_07.jpg'},
+        {name: 'space... the final frontier', imgUrl: '/img/expedia/pic_08.jpg'},
+        {name: 'green sun', imgUrl: '/img/expedia/pic_09.jpg'},
+        {name: 'puppy', imgUrl: '/img/expedia/pic_10.jpg'}
+    ];
+
+    var val1 = document.getElementById('valueOne');
+    var val2 = document.getElementById('valueTwo');
+    var val3 = document.getElementById('valueThree');
+    var imageResult = document.getElementById('imageResult');
+
+
+    //check for DeviceOrientationEvent
+    if(window.DeviceOrientationEvent){
+
+        //LISTEN and execute
+        window.addEventListener('deviceorientation', function(e){
+
+            var alpha;
+            var beta = e.beta;
+            var gamma = e.gamma;
+
+            if(event.webkitCompassHeading) {
+                alpha = event.webkitCompassHeading;
+            } else {
+                 alpha = e.alpha;
+            }
+
+            val1.innerHTML = alpha.toFixed(0);
+            val2.innerHTML = beta.toFixed(0);
+            val3.innerHTML = gamma.toFixed(0);
+
+            console.log(alpha + ', ' + beta + ', ' + gamma);
+
+            getProperImage(alpha, locations, imageResult);
+
+        });
+
+    } else {
+        console.log('your browser doesn\'t support the DeviceOrientation API');
+    }
+
+    //function definitions
+    function getProperImage(compassVal, array, div){
+        var range = 360/array.length; //36 degrees each pic
+
+        if(compassVal >= 0 && compassVal < 36) div.innerHTML = '<img src="' + array[0].imgUrl + '">';
+        if(compassVal >= 36 && compassVal < 72) div.innerHTML = '<img src="' + array[1].imgUrl + '">';
+        if(compassVal >= 72 && compassVal < 108) div.innerHTML = '<img src="' + array[2].imgUrl + '">';
+        if(compassVal >= 108 && compassVal < 144) div.innerHTML = '<img src="' + array[3].imgUrl + '">';
+        if(compassVal >= 144 && compassVal < 180) div.innerHTML = '<img src="' + array[4].imgUrl + '">';
+        if(compassVal >= 180 && compassVal < 216) div.innerHTML = '<img src="' + array[5].imgUrl + '">';
+        if(compassVal >= 216 && compassVal < 252) div.innerHTML = '<img src="' + array[6].imgUrl + '">';
+        if(compassVal >= 252 && compassVal < 288) div.innerHTML = '<img src="' + array[7].imgUrl + '">';
+        if(compassVal >= 288 && compassVal < 324) div.innerHTML = '<img src="' + array[8].imgUrl + '">';
+        if(compassVal >= 324 && compassVal < 360) div.innerHTML = '<img src="' + array[9].imgUrl + '">';
+    }
+</script>
+
+</body>
+</html>
