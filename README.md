@@ -46,4 +46,7 @@ To load the Three.JS examples:
 - [npm cookie-parser](https://www.npmjs.com/package/cookie-parser)
 - [Codementor: cookie management in Express.js](https://www.codementor.io/nodejs/tutorial/cookie-management-in-express-js)
 
+##Notes DeviceOrientationEvent API
+- [HTML5 Geolocation](http://www.w3schools.com/html/html5_geolocation.asp) : Using this to find the 'true north' to offset the deviceOrientationValue on start.
+
 
