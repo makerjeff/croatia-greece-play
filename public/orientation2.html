@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>deviceOrientation2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="theme-color" content="rgba(255,0,0,1.0)">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+    <style>
+        body, html {
+
+            display: flex;
+            font-family: "Montserrat", sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            /*remove long press*/
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+        }
+
+        img {
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+        }
+
+        .content {
+            display: flex;
+            position: relative;
+
+            margin: 20px;
+
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #orientation_container {
+            display: flex;
+            position: relative;
+            width: 100%;
+
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+           /*visibility: hidden;*/
+        }
+
+        #position_container {
+            display: flex;
+            position: relative;
+            width: 100%;
+
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #imageResult {
+            display: flex;
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content">
+
+    <h2>Device Orientation2</h2>
+    <p>Using GeoLocation coords.heading to offset DeviceOrientation.</p>
+
+    <!--get position button-->
+    <button id="get_position_button">get position</button>
+
+    <!--orientation information-->
+    <div id="orientation_container">
+        <h3>Orientation Information</h3>
+        <div class="valueHolder"> <strong>compass: </strong> <span id="valueOne">dummyVal 1</span></div>
+        <div class="valueHolder"> <strong>tilt: </strong> <span id="valueTwo">dummyVal 1</span></div>
+        <div class="valueHolder"> <strong>roll: </strong> <span id="valueThree">dummyVal 1</span></div>
+    </div>
+
+    <div id="position_container">
+        <h3>Position Information</h3>
+        <div id="position_data"> (no data) </div>
+    </div>
+
+    <!--image result information-->
+    <div id="imageResult"></div>
+</div>
+
+
+
+<script>
+    //10 different locations (dummy)
+    var locations = [
+        {name: 'castle', imgUrl: '/img/expedia/pic_01.jpg'},
+        {name: 'dock', imgUrl: '/img/expedia/pic_02.jpg'},
+        {name: 'water bird', imgUrl: '/img/expedia/pic_03.jpg'},
+        {name: 'elephant', imgUrl: '/img/expedia/pic_04.jpg'},
+        {name: 'space cat', imgUrl: '/img/expedia/pic_05.jpg'},
+        {name: 'murdered leaf', imgUrl: '/img/expedia/pic_06.jpg'},
+        {name: 'eyeball texture', imgUrl: '/img/expedia/pic_07.jpg'},
+        {name: 'space... the final frontier', imgUrl: '/img/expedia/pic_08.jpg'},
+        {name: 'green sun', imgUrl: '/img/expedia/pic_09.jpg'},
+        {name: 'puppy', imgUrl: '/img/expedia/pic_10.jpg'}
+    ];
+
+    var val1 = document.getElementById('valueOne');
+    var val2 = document.getElementById('valueTwo');
+    var val3 = document.getElementById('valueThree');
+    var imageResult = document.getElementById('imageResult');
+
+    var button = document.getElementById('get_position_button');
+    var positionData = document.getElementById('position_data');
+
+
+
+    //geolocation logic
+    if(navigator.geolocation) {
+        timeoutVal = 10 * 1000 * 1000;
+
+        navigator.geolocation.getCurrentPosition(displayPosition, displayError, {
+            enableHighAccuracy: false,
+            timeout: timeoutVal,
+            maximumAge: 0
+        });
+    } else {
+        alert('Geolocation isn\'t supported by your janky browser.');
+    }
+
+    function displayPosition(position){
+        positionData.innerHTML = position.coords.latitude.toFixed(2) + ', ' + position.coords.longitude.toFixed(2);
+    }
+
+    function displayError(error){
+        var errors = {1:'permission denied', 2: 'position unavailable', 3: 'request timeout'};
+        alert("error: " + errors[error.code]);
+
+    }
+
+    //device orientation logic
+    if(window.DeviceOrientationEvent){
+
+        //LISTEN and execute
+        window.addEventListener('deviceorientation', function(e){
+            var alpha, beta, gamma;
+
+            if(event.webkitCompassHeading) {
+                alpha = event.webkitCompassHeading;
+            } else {
+                 alpha = e.alpha;
+            }
+
+            beta = e.beta;
+            gamma = e.gamma;
+
+            val1.innerHTML = alpha.toFixed(0);
+            val2.innerHTML = beta.toFixed(0);
+            val3.innerHTML = gamma.toFixed(0);
+
+            console.log(alpha + ', ' + beta + ', ' + gamma);
+
+            setProperImage(alpha, locations, imageResult);
+        });
+
+    } else {
+        console.log('your browser doesn\'t support the DeviceOrientation API');
+    }
+
+    // old
+    function setProperImage(compassVal, array, div){
+        var range = 360/array.length; //36 degrees each pic
+
+        if(compassVal >= 0 && compassVal < 36) div.innerHTML = '<img src="' + array[0].imgUrl + '">';
+        if(compassVal >= 36 && compassVal < 72) div.innerHTML = '<img src="' + array[1].imgUrl + '">';
+        if(compassVal >= 72 && compassVal < 108) div.innerHTML = '<img src="' + array[2].imgUrl + '">';
+        if(compassVal >= 108 && compassVal < 144) div.innerHTML = '<img src="' + array[3].imgUrl + '">';
+        if(compassVal >= 144 && compassVal < 180) div.innerHTML = '<img src="' + array[4].imgUrl + '">';
+        if(compassVal >= 180 && compassVal < 216) div.innerHTML = '<img src="' + array[5].imgUrl + '">';
+        if(compassVal >= 216 && compassVal < 252) div.innerHTML = '<img src="' + array[6].imgUrl + '">';
+        if(compassVal >= 252 && compassVal < 288) div.innerHTML = '<img src="' + array[7].imgUrl + '">';
+        if(compassVal >= 288 && compassVal < 324) div.innerHTML = '<img src="' + array[8].imgUrl + '">';
+        if(compassVal >= 324 && compassVal < 360) div.innerHTML = '<img src="' + array[9].imgUrl + '">';
+    }
+
+    //TODO: Add canvas video playback, with synchronized video.
+</script>
+
+</body>
+</html>

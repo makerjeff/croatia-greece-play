@@ -10,6 +10,7 @@ To load the Three.JS examples:
     localhost:3000/three/<file number>
 	
 ##Notes Node/Express
+- TODO: Work on SSL
 - Previous Project: brunchjog-codetuts-play. Handing over on Monday July 20th, 2016, in Split Croatia.
 - Includes work files from "Meadowlark Travel website".
 - "--save-dev <package>" to save to devDependencies.
@@ -48,5 +49,8 @@ To load the Three.JS examples:
 
 ##Notes DeviceOrientationEvent API
 - [HTML5 Geolocation](http://www.w3schools.com/html/html5_geolocation.asp) : Using this to find the 'true north' to offset the deviceOrientationValue on start.
+- [Google Geolocation](https://developers.google.com/web/fundamentals/native-hardware/user-location/obtain-location?hl=en) : Basics of geoLocation API.
+- [Node.JS and HTTPS](http://stackoverflow.com/questions/11744975/enabling-https-on-express-js)
+- [Get free SSL](https://mobiforge.com/news-comment/no-https-then-bye-bye-geolocation-in-chrome-50)
 
 
