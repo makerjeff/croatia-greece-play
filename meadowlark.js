@@ -10,6 +10,27 @@ var colors = require('colors');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 
+
+//mongoose setup
+var mongoose = require('mongoose');
+var mongooseOptions = {
+    server: {
+        socketOptions: {keepAlive:1}
+    }
+};
+
+mongoose.connect('mongodb://localhost/meadowlarkTest');
+
+var db = mongoose.connection;
+db.on('error',function(err){
+    console.error('connection error: ' + err);
+});
+db.once('open', function(){
+    console.log('MongoDB connection established');
+});
+
+//TODO: continue working on DB integration.
+
 //grab custom modules
 var fortune = require('./lib/fortune.js');
 var nursery = require('./lib/nursery.js');
