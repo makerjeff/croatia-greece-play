@@ -38,19 +38,25 @@
     var source = document.getElementsByTagName('source');
 
     var button = document.getElementById('button');
-    var c = document.getElementById('c');
 
     window.addEventListener('DOMContentLoaded', function(e){
-        var v = document.getElementById('video');
+        var v = document.getElementById('video1_source');
         var canvas = document.getElementById('c');
         var context = canvas.getContext('2d');
 
+        var cw = Math.floor(canvas.clientWidth / 100);
+        var ch = Math.floor(canvas.clientHeight / 100);
+
+
         v.addEventListener('play', function(e){
-            draw(this,context, 960, 480);
+            draw(this, context, 960, 480);
         });
 
-        function draw(){
-            //TODO: continue here.
+        function draw(v, c, w, h){
+            if(v.paused || v.ended) return false;
+
+            c.drawImage(v, 0,0,w,h);
+            setTimeout(draw, 20, v, c, w, h);
         }
 
 
