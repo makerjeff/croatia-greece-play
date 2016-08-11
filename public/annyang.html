@@ -4,20 +4,43 @@
     <meta charset="UTF-8">
     <title>annyang</title>
     <script src="/lib/annyang.min.js"></script>
-    <script src="/lib/speakClient.js"></script>
+
 </head>
 <body>
 
 <div class="container">
     <h1>Annyang!</h1>
-    <div id="audio"></div>
+
+    <form id="speech_input_form">
+        <input id="textField" name="textField" type="text" autocomplete="off" autofocus>
+        <input type="submit">
+    </form>
+
+
 </div>
 
 <script>
-    if(annyang){
 
+    var form = document.getElementsByTagName('form')[0];
+    var inputField = document.getElementById('textField');
+
+    form.addEventListener('submit', function(e){
+        e.preventDefault();
+        console.log('if the page didn\'t change, then everything is working properly');
+
+        //do something, TODO: continue here
+
+        //clear form box
+        inputField.value = '';
+
+    });
+
+//ann yang related
+    if(annyang){
         console.log('annyang is ready for you.');
     }
+
+
 </script>
 </body>
 </html>

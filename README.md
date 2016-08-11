@@ -47,11 +47,17 @@ To load the Three.JS examples:
 - [npm cookie-parser](https://www.npmjs.com/package/cookie-parser)
 - [Codementor: cookie management in Express.js](https://www.codementor.io/nodejs/tutorial/cookie-management-in-express-js)
 
-##Notes DeviceOrientationEvent API
+##Notes DeviceOrientationEvent API and Geolocation API
 - [HTML5 Geolocation](http://www.w3schools.com/html/html5_geolocation.asp) : Using this to find the 'true north' to offset the deviceOrientationValue on start.
 - [Google Geolocation](https://developers.google.com/web/fundamentals/native-hardware/user-location/obtain-location?hl=en) : Basics of geoLocation API.
 - [Node.JS and HTTPS](http://stackoverflow.com/questions/11744975/enabling-https-on-express-js)
 - [Get free SSL](https://mobiforge.com/news-comment/no-https-then-bye-bye-geolocation-in-chrome-50)
+
+##NOTES HTML5 Video Events
 - [HTML5 Video Events Videos](https://www.w3.org/2010/05/video/mediaevents.html): download the videos here Canvas video testing.
+
+## NOTES WebSpeechAPI & Annyang
+- [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Window/speechSynthesis)
+- [annyang API](https://github.com/TalAter/annyang)
 
 
