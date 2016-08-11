@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas video</title>
+
+    <style>
+        html, body {
+            position: relative;
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .visuallyHiddenDiv {
+
+        }
+
+        .visuallyShownDiv {
+        }
+    </style>
+</head>
+<body>
+
+<button id="button">change source</button>
+
+<video id="video1_source" loop class="">
+    <source src="video/trailer.mp4" type="video/mp4">
+</video>
+
+<canvas id="c" width="960" height="480"></canvas>
+
+<script>
+
+    var video = document.getElementById('video1_source');
+    var source = document.getElementsByTagName('source');
+
+    var button = document.getElementById('button');
+    var c = document.getElementById('c');
+
+    window.addEventListener('DOMContentLoaded', function(e){
+        var v = document.getElementById('video');
+        var canvas = document.getElementById('c');
+        var context = canvas.getContext('2d');
+
+        v.addEventListener('play', function(e){
+            draw(this,context, 960, 480);
+        });
+
+        function draw(){
+            //TODO: continue here.
+        }
+
+
+
+    });
+
+    button.addEventListener('click', function(e){
+        video.src = 'video/movie_300.mp4';
+    });
+
+    video.addEventListener('click', function(e){
+
+        if(this.paused) {
+            this.play();
+            console.log('playing video ' + this.currentSrc);
+        } else {
+            this.pause();
+            console.log('pausing video ' + this.currentSrc);
+        }
+        //console.log(this);
+    });
+
+
+
+</script>
+
+</body>
+</html>
