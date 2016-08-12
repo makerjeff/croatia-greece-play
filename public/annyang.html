@@ -61,7 +61,7 @@
             var commands = {
                 'hello': function() {alert('Hello world');},
                 'eject': function() {saySomething('ejecting');},
-                'open door': function() {saySomething('opening door');}
+                'open *item': function(item) {saySomething(item + ' has been opened.');}
             };
 
             //add commands
