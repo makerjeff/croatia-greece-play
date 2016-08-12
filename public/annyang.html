@@ -61,7 +61,15 @@
             var commands = {
                 'hello': function() {alert('Hello world');},
                 'eject': function() {saySomething('ejecting');},
-                'open *item': function(item) {saySomething(item + ' has been opened.');}
+                'open *item': function(item) {saySomething(item + ' has been opened.');},
+                'search google for *criteria': function(criteria){
+                    saySomething('looking for ' + criteria + ' on Google.');
+                    window.open("http://www.google.com/#q=" + criteria);
+                },
+                'search google images for *criteria': function(criteria){
+                    saySomething('looking for ' + criteria + ' on Google images.');
+                    window.open("https://www.google.com/search?hl=en&site=imghp&tbm=isch&source=hp&q=" + criteria);
+                }
             };
 
             //add commands
