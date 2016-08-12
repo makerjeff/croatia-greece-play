@@ -60,4 +60,10 @@ To load the Three.JS examples:
 - [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Window/speechSynthesis)
 - [annyang API](https://github.com/TalAter/annyang)
 
+## NOTES Mongoose
+- [Mongoose Model](http://mongoosejs.com/docs/models.html)
+
+## NOTES Architecture
+- [Architecting a Secure RESTful Node.js app](http://thejackalofjavascript.com/architecting-a-restful-node-js-app/)
+
 

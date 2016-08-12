@@ -19,23 +19,114 @@ var mongooseOptions = {
     }
 };
 
-mongoose.connect('mongodb://localhost/meadowlarkTest');
+//connect to local DB
+mongoose.connect('mongodb://localhost/meadowlarkTest', mongooseOptions);
 
+//connection event listeners (picked up from mongoose tutorial)
 var db = mongoose.connection;
+
+//mongoose vacation schema + model
+var Vacation = require('./models/vacation.js');
+
 db.on('error',function(err){
     console.error('connection error: ' + err);
 });
+
+
 db.once('open', function(){
     console.log('MongoDB connection established');
-});
+    // ----- Mongoose / MongoDB data seeding -----
+//check to see if there's something in the mock db
+//Vacation.find(<callback function>);
+    Vacation.find(function(err, vacations){
 
-//TODO: continue working on DB integration.
+        if(vacations.length) {
+            console.log('Dummy files already seeded.'.blue);
+            return;
+        }
+
+        //vacation package 01
+        new Vacation({
+            name: 'Hood River Day Trip',
+            slug: 'hood-river-day-trip',
+            category: 'Day Trip',
+            sku: 'HR199',
+            description: 'Spend a day sailing on the Columbia and ' +
+            'enjoying craft beers in Hood River!',
+            priceInCents: 9995,
+            tags: ['day trip', 'hood river', 'sailing', 'windsurfing', 'breweries'],
+            inSeason: true,
+            maximumGuests: 16,
+            available: true,
+            packagesSold: 0
+        }).save();
+
+        console.log('vacation package 1 saved.'.green);
+
+        //vacation package 02
+        new Vacation({
+            name: 'Oregon Coast Getaway',
+            slug: 'oregon-coast-getaway',
+            category: 'Weekend Getaway',
+            sku: 'OC39',
+            description: 'Enjoy the ocean air and quant coastal towns!',
+            priceInCents: 269995,
+            tags: ['weekend getaway', 'oregon coast', 'beachcombing'],
+            inSeason: false,
+            maximumGuests: 8,
+            available: true,
+            packagesSold: 0
+        }).save();
+
+        console.log('vacation package 2 saved.'.green);
+
+        //vacation package 03
+        new Vacation({
+            name: 'Rock Climbing in Bend',
+            slug: 'rock-climbing-in-bend',
+            category: 'Adventure',
+            sku: 'B99',
+            description: 'Experience the thrill of climbing in the high desert.',
+            priceInCents: 289995,
+            tags: ['weekend getaway', 'bend', 'high desert', 'rock climbing'],
+            inSeason: true,
+            requiresWaiver: true,
+            maximumGuests: 4,
+            available: false,
+            packagesSold: 0,
+            notes: 'The tour guide is currently recovering from a skiing accident.'
+        }).save();
+
+        console.log('vacation package 3 saved.'.green);
+
+        new Vacation({
+            name: 'Get Wasted in Los Angeles',
+            slug: 'get-wasted-in-los-angeles',
+            category: 'Binge Drinking',
+            sku: 'DRUNK99',
+            description: 'Party and get drunk in the city of Angels.',
+            priceInCents: 30095,
+            tags: ['alcohol', 'partying', 'drinking'],
+            inSeason: true,
+            requiresWaiver: true,
+            maximumGuests: 42,
+            available: true,
+            packagesSold: 0,
+            notes: 'Be your own tour guide as you drink your way through downtown on foot.'
+        }).save();
+        console.log('vacation package 4 saved.'.green);
+
+    });
+
+});
 
 //grab custom modules
 var fortune = require('./lib/fortune.js');
 var nursery = require('./lib/nursery.js');
 var navlinks = require('./models/navlinks.js');
 var credentials = require('./credentials.js');
+
+
 
 //grab dummyDataModule (model)
 var dummyData = require('./models/dummyData.js');
@@ -68,10 +159,11 @@ app.set('view-cache', true);
 app.set('port', process.env.PORT || 3000);
 
 
+
 /* #################### MIDDLEWARE #################### */
 // //debug log middleware (JWX)
 app.use(function(req,res,next){
-    var output = 'client request: ' + req.url.toString().blue + ', by:' + req.host + ', ' + new Date().toString().yellow;
+    var output = 'client request: ' + req.url.toString().blue + ', by:' + req.hostname + ', ' + new Date().toString().yellow;
     console.log(output);
     next();
 });
@@ -273,6 +365,25 @@ app.get('/thank-you', function(req,res){
     res.render('thank-you', {name: app.get('formUser'), email:app.get('formEmail')});
 });
 
+// ----- vacations related (mongoose and DB) -----
+app.get('/vacations', function(req, res){
+    //params, callback
+    Vacation.find({available: true}, function(err, vacations){
+        var context = {
+            vacations: vacations.map(function(vacation){
+                return {
+                    sku: vacation.sku,
+                    name: vacation.name,
+                    description: vacation.description,
+                    price: vacation.getDisplayPrice(),
+                    inSeason: vacation.inSeason
+                }
+        })};
+        //render and send context.
+        res.render('vacations', context);
+    });
+});
+
 /***** Catch-Alls *****/
 
 // serve static files
@@ -293,5 +404,5 @@ app.use(function(req,res,next){
 /* #################### START SERVER #################### */
 //using an app getter then running the 'listen()' function.
 app.listen(app.get('port'), function(){
-    console.log('Express started on http://localhost: ' + app.get('port') +'; ' + 'press CTRL-C to terminate.'.red);
+    console.log('Express'.blue + ' started on http://localhost: ' + app.get('port') +'; ' + 'press CTRL-C to terminate.'.yellow);
 });
