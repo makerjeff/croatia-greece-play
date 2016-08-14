@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas-play</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+    <style>
+        canvas {
+            width: 640px;
+            height: 480px;
+            border: black 1px solid;
+        }
+    </style>
+
+    <script>
+//        window.addEventListener('load', function(e){
+//            pageLoaded();
+//        });
+//
+//        function pageLoaded(){
+//            console.log('Hello world!');
+//        }
+    </script>
+
+
+</head>
+<body>
+<h3>canvas play</h3>
+
+<canvas id="testcanvas">
+    If you see this message, your browser doesn't support canvas.
+</canvas>
+
+<img src="/img/canvas/spaceship.png" id="spaceship">
+
+<!--deprecate in favor of JS dynamically loaded version-->
+<!--<audio src="/audio/bg_music.mp3" controls>-->
+    <!--Your browser doesn't support audio.-->
+<!--</audio>-->
+
+<script>
+    var canvas = document.getElementById('testcanvas');
+    var context = canvas.getContext('2d');
+
+    //canvas element width & height need to be set, not just the div style.
+    canvas.width = 640;
+    canvas.height = 480;
+
+    // ------ Rects ------
+    //fill rects
+    context.fillRect(200,10,100,100);
+    context.fillRect(50,70,90,30);
+
+    //stroke rects
+    context.strokeRect(110,10,50,50);
+    context.strokeRect(30,10,50,50);
+
+    //clear rects (used to clear the screen before next frame)
+    context.clearRect(210,20,30,20);
+    context.clearRect(260,20,30,20);
+
+    // ------ Complex Paths ------
+
+    //filled triangle
+    context.beginPath();
+    context.moveTo(10,120);
+    context.lineTo(10,180);
+    context.lineTo(110,150);
+    context.fill(); //fill() automatically closes shapes
+
+    //stroked triangle
+    context.beginPath();
+    context.moveTo(140,160);
+    context.lineTo(140,220);
+    context.lineTo(40,190);
+    context.closePath();    //manual closing of shape
+    context.stroke();
+
+    //more complex shape
+    context.beginPath();
+    context.moveTo(160,160);
+    context.lineTo(170,220);
+    context.lineTo(240,210);
+    context.lineTo(260,170);
+    context.lineTo(190,140);
+    context.closePath();
+    context.stroke();
+
+    //drawing arcs
+    //arc(x, y, radius, startAngle, endAngle, counterClockwise?);
+    context.beginPath();
+    context.arc(100,300,40,0,Math.PI, true);    //PI in radians = 180 degrees
+    context.stroke();
+
+    //draw full circle
+    context.beginPath();
+    context.arc(100,300, 30, 0, Math.PI*2, true);
+    context.fill();
+
+    // drawing three quarter arc
+    context.beginPath();
+    context.arc(200,300,25,0, 3/2*Math.PI, false);
+    context.stroke();
+
+    // ------ drawing text ------
+    //draw solid text
+    context.fillText('this is some text...', 330, 40);
+
+    //modifying the font
+    var weight = '';
+    var size = '16px';
+    var font = 'Montserrat';
+    context.font = weight + ' ' + size + ' ' + font;
+    context.fillText('this is 12px Montserrat bold', 330, 60);
+
+    //stroke text
+    context.font = 'bold 16px Montserrat';
+    context.strokeText('this is 16px Montserrat bold stroked', 330, 80);
+
+    // ------ Drawing Colors ------
+    context.fillStyle = 'red';
+    context.fillRect(310,160,100,50);
+
+    context.strokeStyle = 'green';
+    context.strokeRect(310,240,100,50);
+
+    context.fillStyle = 'rgba(255,0,0,1.0)';
+    context.fillRect(420,160,100,50);
+
+    //transparency
+    context.fillStyle = 'rgba(0,255,0,0.6)';
+    context.fillRect(450,180,100,50);
+
+    // ( has to wait until content has been loaded )
+    window.addEventListener('load', function(e){
+        //draw images after they've loaded in the DOM (first way)
+        var image = document.getElementById('spaceship');
+
+        //draw image at 0,350
+        context.drawImage(image, 0, 350);
+
+        //draw half size
+        //(image, x, y, width, height)
+        context.drawImage(image, 0, 400, 95,25);
+
+        //draw part of image
+        //(image, sourceX, sourceY, sourceWidth, sourceHeight, x, y, width, height)
+        context.drawImage(image, 0,0,60,50,0,420,60,50);
+
+        // ------ transforming and rotating ------
+
+        //general workflow for sprites:
+        //1. translate the canvas origin to the location of the object
+        //2. rotate the canvas by the desired angle
+        //3. Draw the object
+        //4. restore the canvas back to its original state
+
+        //translate origin to location of object
+        context.translate(250,370);
+        //rotate about the new origin by 60 degrees
+        context.rotate(Math.PI/3);  //Math.PI = 180
+        context.drawImage(image, 0,0,60,50,-30,-25,60,50);
+        //restore context by rotating it back
+        context.rotate(-Math.PI/3);
+        context.translate(-250,-370);
+
+        //Translate origin to next location
+        context.translate(300,370);
+        //rotate about the new origin
+        context.rotate(3 * Math.PI/4);
+        context.drawImage(image, 0,0,60,50,-30,-25,60,50);
+        //restore
+        context.rotate(-3 * Math.PI/4);
+        context.translate(-300, -370);
+
+
+
+        // ----- functions -----
+        function animateStuff(){
+            requestAnimationFrame(animateStuff);
+            context.drawImage(image, 0,0,60,50,mover, 420, 60,50);
+            mover += 3;
+        }
+
+        // ------ audio ------
+        //create new audio object
+        var sound = document.createElement('audio');
+        sound.src = '/audio/bg_music.mp3';
+        sound.play();
+
+        //use this event to keep track of files being loaded.
+        sound.addEventListener('canplaythrough', function(e){
+            console.log(sound.src + ' has loaded.');
+            document.body.appendChild(sound);
+        });
+
+    });
+
+
+
+</script>
+
+</body>
+</html>

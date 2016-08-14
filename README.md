@@ -66,4 +66,7 @@ To load the Three.JS examples:
 ## NOTES Architecture
 - [Architecting a Secure RESTful Node.js app](http://thejackalofjavascript.com/architecting-a-restful-node-js-app/)
 
+## NOTES Canvas
+- [MDN Canvas Rendering 2D Context](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage)
+
 
