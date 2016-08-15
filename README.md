@@ -66,7 +66,10 @@ To load the Three.JS examples:
 ## NOTES Architecture
 - [Architecting a Secure RESTful Node.js app](http://thejackalofjavascript.com/architecting-a-restful-node-js-app/)
 
-## NOTES Canvas
+## NOTES Pro HTML5 Games
 - [MDN Canvas Rendering 2D Context](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage)
+- [New JQuery 3.0 'load' syntax](http://stackoverflow.com/questions/37738732/jquery-3-0-url-indexof-error): Use $(window).on('load', function(){}); instead.
+- [Ternary Operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)
+- [requestAnimationFrame tips](http://creativejs.com/resources/requestanimationframe/)
 
 
