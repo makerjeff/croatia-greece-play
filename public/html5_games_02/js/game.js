@@ -64,6 +64,18 @@ var levels = {
 
     //load all data and images for a specific level
     load: function(number){
+        //declare a new currentLevel object
+        game.currentLevel = {
+            number: number,
+            hero: []
+        };
+        game.score = 0;
+        $('#score').html('Score: ' + game.score);
+        var level = levels.data[number];
+
+        //load backgroud, foreground, slingshot images
+        game.currentLevel.backgroundImage = loader.loadImage('../images/backgrounds/' + level.background + '.png');
+        //TODO: continue here
 
     }
 };
@@ -101,7 +113,7 @@ var loader = {
         var image = document.createElement('image');
         image.src = url;
         image.addEventListener('load', function(e){
-            loader.itemLoaded;
+            loader.itemLoaded();
         });
         return image;
     },
