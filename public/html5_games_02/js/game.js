@@ -2,6 +2,24 @@
  * Created by jeffersonwu on 8/14/16.
  */
 
+/* ########## POLYFILLS ########## */
+
+// requestAnimationFrame polyfill (wrapped in an IIFE!)
+(function(){
+    var lastTime = 0;
+    var vendors = ['ms','moz', 'webkit', '0'];
+
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; x++) {
+        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'];
+    }
+
+    //TODO: continue here
+}());
+
+
+
+
 /* ########## SETUP OBJECTS ########## */
 //create a game object
 var game = {
@@ -94,8 +112,6 @@ var levels = {
         }
     }
 };
-
-//TODO: left off here.
 
 //Asset loader object
 var loader = {
