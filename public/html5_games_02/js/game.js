@@ -13,13 +13,11 @@ var game = {
         levels.init();  //initialize level methods
         loader.init();  //initialize loader
 
-        //hide all game layers and display start screen
-        $('.gamelayer').hide();
-        $('#gamestartscreen').show();
+        $('.gamelayer').hide();     //hide all game layers
+        $('#gamestartscreen').show();   //display start screen
 
-        //get handler for canvas and context
-        game.canvas = $('#gamecanvas')[0];
-        game.context = game.canvas.getContext('2d');
+        game.canvas = $('#gamecanvas')[0];  //get handler for canvas
+        game.context = game.canvas.getContext('2d');    //get handler for context
     },
     showLevelScreen: function(){
         $('.gamelayer').hide();
@@ -41,12 +39,19 @@ var levels = {
             foreground: 'desert-foreground',
             background: 'clouds-background',
             entities: []
+        },
+        {
+            //third jeff-level
+            foreground: 'desert-foreground',
+            background: 'clouds-background',
+            entities: []
         }
     ],
 
     init: function() {
         var html = '';
 
+        //create buttons for every level in levels.data
         for(var i=0; i < levels.data.length; i++) {
             var level = levels.data[i];
             html += '<input type="button" value="' + (i+1) + '">';
@@ -69,16 +74,28 @@ var levels = {
             number: number,
             hero: []
         };
+        //game score
         game.score = 0;
         $('#score').html('Score: ' + game.score);
+
         var level = levels.data[number];
 
         //load backgroud, foreground, slingshot images
         game.currentLevel.backgroundImage = loader.loadImage('../images/backgrounds/' + level.background + '.png');
-        //TODO: continue here
-
+        game.currentLevel.foregroundImage = loader.loadImage('../images/backgrounds/' + level.foreground + '.png');
+        game.slingshotImage = loader.loadImage('../images/slingshot.png');
+        game.slingshotFrontImage = loader.loadImage('../images/slingshot-front.png');
+        
+        //Call game.start() once the assets have loaded
+        if(loader.loaded){
+            game.start();
+        } else {
+            loader.onload = game.start;
+        }
     }
 };
+
+//TODO: left off here.
 
 //Asset loader object
 var loader = {
@@ -106,18 +123,21 @@ var loader = {
     },
 
     //load image function
-    loadImage: function(){
+    loadImage: function(url){
         this.totalCount++;
         this.loaded = false;
         $('#loadingscreen').show();
         var image = document.createElement('image');
         image.src = url;
-        image.addEventListener('load', function(e){
-            loader.itemLoaded();
-        });
+        image.onload = loader.itemLoaded();
+
         return image;
     },
+
+    //default sound file extension
     soundFileExtn: ".ogg",
+
+    //load sound function
     loadSound: function(url){
         this.totalCount++;
         this.loaded=false;
