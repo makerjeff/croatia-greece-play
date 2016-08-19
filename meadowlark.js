@@ -43,6 +43,7 @@ db.once('open', function(){
 //Vacation.find(<callback function>);
     Vacation.find(function(err, vacations){
 
+        //if there's something in the db, return out.
         if(vacations.length) {
             console.log('Dummy files already seeded.'.blue);
             return;
@@ -95,7 +96,7 @@ db.once('open', function(){
             inSeason: true,
             requiresWaiver: true,
             maximumGuests: 4,
-            available: false,
+            available: true,
             packagesSold: 0,
             notes: 'The tour guide is currently recovering from a skiing accident.'
         }).save();
@@ -117,24 +118,24 @@ db.once('open', function(){
             packagesSold: 0,
             notes: 'Be your own tour guide as you drink your way through downtown on foot.'
         }).save();
-        console.log('vacation package 3 saved.'.green);
+        console.log('vacation package 4 saved.'.green);
 
         new Vacation({
             name: 'Get Wasted in Miami',
             slug: 'get-wasted-in-miami',
             category: 'Binge Drinking',
-            sku: 'DRUNK405',
+            sku: 'DRUNK909',
             description: 'Party and get drunk in the city of whorebags.',
             priceInCents: 30095,
             tags: ['alcohol', 'partying', 'drinking'],
-            inSeason: true,
+            inSeason: false,
             requiresWaiver: true,
             maximumGuests: 42,
-            available: false,
+            available: true,
             packagesSold: 0,
             notes: 'Be your own tour guide as you drink your way through downtown on foot.'
         }).save();
-        console.log('vacation package 4 saved.'.green);
+        console.log('vacation package 5 saved.'.green);
 
     });
 
