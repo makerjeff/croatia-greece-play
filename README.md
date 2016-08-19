@@ -72,4 +72,7 @@ To load the Three.JS examples:
 - [Ternary Operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)
 - [requestAnimationFrame tips](http://creativejs.com/resources/requestanimationframe/)
 
+## NOTES WebAudioAPI
+- [HTML5 web audio API tutorial: building a sound pad](https://www.sitepoint.com/html5-web-audio-api-tutorial-building-virtual-synth-pad/)
+
 

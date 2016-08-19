@@ -117,6 +117,23 @@ db.once('open', function(){
             packagesSold: 0,
             notes: 'Be your own tour guide as you drink your way through downtown on foot.'
         }).save();
+        console.log('vacation package 3 saved.'.green);
+
+        new Vacation({
+            name: 'Get Wasted in Miami',
+            slug: 'get-wasted-in-miami',
+            category: 'Binge Drinking',
+            sku: 'DRUNK405',
+            description: 'Party and get drunk in the city of whorebags.',
+            priceInCents: 30095,
+            tags: ['alcohol', 'partying', 'drinking'],
+            inSeason: true,
+            requiresWaiver: true,
+            maximumGuests: 42,
+            available: false,
+            packagesSold: 0,
+            notes: 'Be your own tour guide as you drink your way through downtown on foot.'
+        }).save();
         console.log('vacation package 4 saved.'.green);
 
     });
@@ -399,6 +416,7 @@ app.post('/notify-me-when-in-season', function(req,res){
         function(err){
             if(err){
                 console.error(err.stack);
+
                 req.session.flash = {
                     type: 'danger',
                     intro: 'Ooops!',

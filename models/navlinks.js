@@ -9,9 +9,10 @@ var navlinks = {
         {text: 'about', url: '/about', alt: 'About page.'},
         {text: 'newsletter', url: '/newsletter', alt: 'Newsletter sign-up, traditional style.'},
         {text: 'newsletter (ajax)', url: '/newsletter-ajax', alt: 'Newsletter sign-up, AJAX style!'},
-        {text: 'headers', url:'/headers', alt: 'Headers debugging page.'},
         {text: 'blocks', url:'/blocks', alt: 'Learning about blocks.'},
-        {text: 'nursery', url: '/nursery', alt: 'Nursery learnings.'}
+        {text: 'nursery', url: '/nursery', alt: 'Nursery learnings.'},
+        {text: 'vacations', url: '/vacations', alt: 'Vacations'},
+        {text: 'headers', url:'/headers', alt: 'Headers debugging page.', debug: true}
     ]
 };
 
