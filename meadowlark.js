@@ -426,7 +426,7 @@ app.post('/notify-me-when-in-season', function(req,res){
                 return res.redirect(303, '/vacations');
             }
 
-            //TODO: figure out why this isn't working.
+            //TODO: ADD SESSIONS TO FIX
             req.session.flash = {
                 type: 'success',
                 intro: 'Thank you!',
@@ -435,6 +435,32 @@ app.post('/notify-me-when-in-season', function(req,res){
             return res.redirect(303, '/vacations');
         }
     );
+});
+
+// ---- experimental 'people' accounts ----
+// getting the page
+app.get('/people', function(req,res){
+    //render peoples page
+    res.render('people', {dummyData: 'Data is passing fine, from backend to frontend.', csrf: 'crsf token goes here'});
+
+    //TODO: change this to 'add people' page
+});
+// posting the data
+app.post('/people', function(req,res){
+    //do stuff here
+    //do stuff here
+    //TODO: add user to DB.
+
+    console.log('form name: ' + req.query.form);
+    console.log('_csrf: '+ req.body._csrf);
+    console.log('name: ' + req.body.firstname_data + ' ' + req.body.lastname_data);
+    console.log('email: ' + req.body.email_data);
+    res.redirect(303, 'people-thank-you');
+});
+
+// people thank you note
+app.get('/people-thank-you', function(req, res){
+    res.render('people-thank-you', {datyum: 'pass this back to the front end.'});
 });
 
 /***** Catch-Alls *****/

@@ -12,12 +12,11 @@ var navlinks = {
         {text: 'blocks', url:'/blocks', alt: 'Learning about blocks.'},
         {text: 'nursery', url: '/nursery', alt: 'Nursery learnings.'},
         {text: 'vacations', url: '/vacations', alt: 'Vacations'},
-        {text: 'headers', url:'/headers', alt: 'Headers debugging page.', debug: true}
+        {text: 'headers', url:'/headers', alt: 'Headers debugging page.', debug: true},
+        {text: 'add people', url: '/people', alt: 'add people as a test', debug: true}
     ]
 };
 
 exports.getNavLinks = function() {
     return navlinks;
 };
-
-//TODO: NOT WORKING, FIX IT.
