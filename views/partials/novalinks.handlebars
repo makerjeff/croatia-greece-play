@@ -1,24 +1,22 @@
 
 {{#if partials.navlinks}}
-    {{#each partials.navlinks.links}}
 
-        {{!if there's a debug method, use the red button}}
-        {{#if debug}}
-            <a href="{{url}}"><button class="btn btn-danger">{{text}}</button></a>
+    <!--testing dropdown-->
+    <div class="dropdown">
+        <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"> &nbsp; &nbsp; menu &nbsp; &nbsp;<span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li class="dropdown-header">vanilla links</li>
 
-            {{!if not, use a regular button}}
-        {{else}}
+            {{#each partials.navlinks.links}}
+                <li><a href="{{url}}">{{text}}</a></li>
+            {{/each}}
 
-            {{#if info}}
-                <a href="{{url}}"><button class="btn btn-info">{{text}}</button></a>
-            {{else}}
-                <a href="{{url}}"><button class="btn btn-primary">{{text}}</button></a>
-            {{/if}}
-        {{/if}}
+            <li class="divider"></li>
+            <li><a href="/">Home</a></li>
+        </ul>
 
-    {{/each}}
+    </div>
 
 {{else}}
     <h5>(no link data)</h5>
-
 {{/if}}

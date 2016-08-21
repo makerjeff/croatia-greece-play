@@ -37,13 +37,18 @@ var VacationInSeasonListener = require('./models/vacationInSeasonListener.js');
 // ----- people setup -----
 var Person = require('./models/people.js');
 
+//create a database state object
+var databaseAlive = false;
+
 
 db.on('error',function(err){
+    databaseAlive = false;
     console.error('connection error: ' + err);
 });
 
 
 db.once('open', function(){
+    databaseAlive = true;
     console.log('MongoDB connection established');
     // ----- Mongoose / MongoDB data seeding -----
 //check to see if there's something in the mock db
@@ -189,6 +194,19 @@ app.set('port', process.env.PORT || 3000);
 
 
 /* #################### MIDDLEWARE #################### */
+
+
+//Disable website if database connection is not established. (JWX)
+app.use(function(req,res,next){
+    if(databaseAlive === false) {
+        res.status(503);
+        res.end('Meadowlark database is down for maintenance. Please check back later.');
+    } else {
+        res.locals.databaseAlive = '<small style="color:rgba(0,175,0,1.0)">(database status: up and running!)</small>';
+        next();
+    }
+});
+
 // //debug log middleware (JWX)
 app.use(function(req,res,next){
     var output = 'client request: ' + req.url.toString().blue + ', by:' + req.hostname + ', ' + new Date().toString().yellow;
@@ -451,7 +469,8 @@ app.get('/view-people', function(req,res){
     //find({<criteria>}, function(error, data)
     Person.find({}, function(err,data){
         if(err){
-            return console.log('an error has occured: ' + err);
+            console.log('an error has occurred: ' + err);
+            return res.render('view-people', {error: 'database error occurred!'});
         } else {
             console.log(data);
             //TODO: clean up the data object before passing on to the front end.

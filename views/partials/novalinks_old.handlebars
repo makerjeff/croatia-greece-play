@@ -1,0 +1,23 @@
+
+{{#if partials.navlinks}}
+    {{#each partials.navlinks.links}}
+
+        {{!if there's a debug method, use the red button}}
+        {{#if debug}}
+            <a href="{{url}}"><button class="btn btn-danger">{{text}}</button></a>
+
+            {{!if not, use a regular button}}
+        {{else}}
+
+            {{#if info}}
+                <a href="{{url}}"><button class="btn btn-info">{{text}}</button></a>
+            {{else}}
+                <a href="{{url}}"><button class="btn btn-primary">{{text}}</button></a>
+            {{/if}}
+        {{/if}}
+
+    {{/each}}
+
+{{else}}
+    <h5>(no link data)</h5>
+{{/if}}

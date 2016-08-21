@@ -5,9 +5,9 @@
 
 var navlinks = {
     links: [
-        {text: 'home', url: '/', alt: 'The main page.'},
-        {text: 'about', url: '/about', alt: 'About page.'},
-        {text: 'newsletter', url: '/newsletter', alt: 'Newsletter sign-up, traditional style.'},
+        {text: 'home', url: '/', alt: 'The main page.', meadowlark: true},
+        {text: 'about', url: '/about', alt: 'About page.', meadowlark: true},
+        {text: 'newsletter', url: '/newsletter', alt: 'Newsletter sign-up, traditional style.', meadowlark: true},
         {text: 'newsletter (ajax)', url: '/newsletter-ajax', alt: 'Newsletter sign-up, AJAX style!'},
         {text: 'blocks', url:'/blocks', alt: 'Learning about blocks.'},
         {text: 'nursery', url: '/nursery', alt: 'Nursery learnings.'},
