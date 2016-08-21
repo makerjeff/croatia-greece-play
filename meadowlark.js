@@ -25,11 +25,18 @@ mongoose.connect('mongodb://localhost/meadowlarkTest', mongooseOptions);
 //connection event listeners (picked up from mongoose tutorial)
 var db = mongoose.connection;
 
+// ----- vacation setup -----
 //mongoose vacation schema + model
+// gets its own collection
 var Vacation = require('./models/vacation.js');
 
 //mongoose notify-me-when-in-season schema + model
+// gets its own collection
 var VacationInSeasonListener = require('./models/vacationInSeasonListener.js');
+
+// ----- people setup -----
+var Person = require('./models/people.js');
+
 
 db.on('error',function(err){
     console.error('connection error: ' + err);
@@ -438,23 +445,48 @@ app.post('/notify-me-when-in-season', function(req,res){
 });
 
 // ---- experimental 'people' accounts ----
-// getting the page
-app.get('/people', function(req,res){
-    //render peoples page
-    res.render('people', {dummyData: 'Data is passing fine, from backend to frontend.', csrf: 'crsf token goes here'});
+//viewing page
+app.get('/view-people', function(req,res){
 
-    //TODO: change this to 'add people' page
+    //find({<criteria>}, function(error, data)
+    Person.find({}, function(err,data){
+        if(err){
+            return console.log('an error has occured: ' + err);
+        } else {
+            console.log(data);
+            //TODO: clean up the data object before passing on to the front end.
+
+            res.render('view-people', {users: data});   //put into a 'user' object to pass to the view.
+        }
+    });
+});
+
+
+
+// getting the add-people page
+app.get('/add-people', function(req,res){
+    //render add-people page
+    res.render('add-people', {dummyData: 'Data is passing fine, from backend to frontend.', csrf: 'crsf token goes here'});
 });
 // posting the data
-app.post('/people', function(req,res){
+app.post('/add-people', function(req,res){
     //do stuff here
-    //do stuff here
-    //TODO: add user to DB.
+    
+    //add a person to db
+    new Person({
+        firstname: req.body.firstname_data,
+        lastname: req.body.lastname_data,
+        email: req.body.email_data,
+        age: req.body.age_data
+    }).save();
+    console.log('person added'.green);
 
+    //log to console for debugging
     console.log('form name: ' + req.query.form);
     console.log('_csrf: '+ req.body._csrf);
     console.log('name: ' + req.body.firstname_data + ' ' + req.body.lastname_data);
     console.log('email: ' + req.body.email_data);
+    console.log('age: ' + req.body.age_data);
     res.redirect(303, 'people-thank-you');
 });
 

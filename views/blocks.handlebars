@@ -34,18 +34,6 @@
 </p>
 
 
-{{#if videoGames}}
-    <h3>Favorite games</h3>
-    <ol>
-        {{#each videoGames}}
-        {{! . (period) refers to the current item in the list}}
-            <li>
-                <a href="http://www.makerjeff.com/{{.}}">{{.}}</a>
-            </li>
-        {{/each}}
-    </ol>
-{{/if}}
-
 {{! PARTIAL DEBUG }}
 {{> videogames}}
 {{> basicweather}}

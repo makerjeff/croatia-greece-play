@@ -8,7 +8,12 @@
 
             {{!if not, use a regular button}}
         {{else}}
-            <a href="{{url}}"><button class="btn btn-primary">{{text}}</button></a>
+
+            {{#if info}}
+                <a href="{{url}}"><button class="btn btn-info">{{text}}</button></a>
+            {{else}}
+                <a href="{{url}}"><button class="btn btn-primary">{{text}}</button></a>
+            {{/if}}
         {{/if}}
 
     {{/each}}

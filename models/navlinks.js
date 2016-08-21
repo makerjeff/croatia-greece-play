@@ -13,7 +13,8 @@ var navlinks = {
         {text: 'nursery', url: '/nursery', alt: 'Nursery learnings.'},
         {text: 'vacations', url: '/vacations', alt: 'Vacations'},
         {text: 'headers', url:'/headers', alt: 'Headers debugging page.', debug: true},
-        {text: 'add people', url: '/people', alt: 'add people as a test', debug: true}
+        {text: 'add people', url: '/add-people', alt: 'add people as a test', debug: true},
+        {text: 'view people', url: '/view-people', alt: 'view list of people', info: true}
     ]
 };
 

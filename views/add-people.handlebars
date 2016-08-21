@@ -9,13 +9,13 @@
 {{/if}}
 
 {{!add new user}}
-<form class="form-horizontal" role="form" action="/people?form=addingPeopleForm" method="POST">
+<form class="form-horizontal" role="form" action="/add-people?form=addingPeopleForm" method="POST">
     <input type="hidden" name="_csrf" value="{{csrf}}">
 
     <div class="form-group">
         <label class="col-sm-2 control-label" for="firstname-id">First name</label>
         <div class="col-sm-4">
-            <input class="form-control" type="text" id="firstname-id" name="firstname_data" autocomplete="off" required>
+            <input class="form-control" type="text" id="firstname-id" name="firstname_data" autocomplete="off" required autofocus>
         </div>
     </div>
 
@@ -30,6 +30,13 @@
         <label class="col-sm-2 control-label" for="email-id">email</label>
         <div class="col-sm-4">
             <input class="form-control" type="email" id="email-id" name="email_data" autocomplete="off" required>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="age-id">age</label>
+        <div class="col-sm-4">
+            <input class="form-control" type="number" id="age-id" name="age_data" autocomplete="off" required>
         </div>
     </div>
 
