@@ -472,7 +472,7 @@ app.get('/view-people', function(req,res){
             console.log('an error has occurred: ' + err);
             return res.render('view-people', {error: 'database error occurred!'});
         } else {
-            console.log(data);
+            console.log(data[data.length - 1]);
             //TODO: clean up the data object before passing on to the front end.
 
             res.render('view-people', {users: data});   //put into a 'user' object to pass to the view.
