@@ -59,7 +59,7 @@
 
             //define annyang commands
             var commands = {
-                'hello': function() {alert('Hello world');},
+                'hello': function() {sayRandomHello();},
                 'eject': function() {saySomething('ejecting');},
                 'open *item': function(item) {saySomething(item + ' has been opened.');},
                 'search google for *criteria': function(criteria){
@@ -82,6 +82,19 @@
         //function definitions
         function saySomething(message){
             var utterance = new SpeechSynthesisUtterance(message);
+            synth.speak(utterance);
+        }
+
+        function sayRandomHello(){
+            var hellos = [
+                    'Hi there!',
+                    'Ahoy!',
+                    'Ni Hao!',
+                    'Bonjour',
+                    'hola'
+            ];
+            var helloToSay = hellos[Math.floor(Math.random() * hellos.length)];
+            var utterance = new SpeechSynthesisUtterance(helloToSay);
             synth.speak(utterance);
         }
     });
