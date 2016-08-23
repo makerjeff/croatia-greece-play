@@ -82,4 +82,8 @@ To load the Three.JS examples:
 ## NOTES JQuery + Bootstrap
 - [Bootstrap Tags](https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/): Add tags automatically in input fields.
 
+## NOTES Payment Options
+- [PayPal, Enabling Fund Transfers within a Group](https://developer.paypal.com/docs/classic/use-cases/uc_social-transfers-within-group/)
+- [PayPal, Adaptive Payments](https://developer.paypal.com/docs/classic/products/adaptive-payments/)
+
 
