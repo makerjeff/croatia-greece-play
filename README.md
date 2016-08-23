@@ -76,4 +76,10 @@ To load the Three.JS examples:
 ## NOTES WebAudioAPI
 - [HTML5 web audio API tutorial: building a sound pad](https://www.sitepoint.com/html5-web-audio-api-tutorial-building-virtual-synth-pad/)
 
+## NOTES MongoDB
+- [Backup and restore MongoDB databases](https://docs.mongodb.com/manual/tutorial/backup-and-restore-tools/)
+
+## NOTES JQuery + Bootstrap
+- [Bootstrap Tags](https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/): Add tags automatically in input fields.
+
 

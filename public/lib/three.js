@@ -24834,7 +24834,7 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 	parameters = parameters || {};
 
-	var _canvas = parameters.canvas !== undefined ? parameters.canvas : document.createElementNS( 'http://www.w3.org/1999/xhtml', 'html5_games_01' ),
+	var _canvas = parameters.canvas !== undefined ? parameters.canvas : document.createElementNS( 'http://www.w3.org/1999/xhtml', 'canvas' ),
 	_context = parameters.context !== undefined ? parameters.context : null,
 
 	_alpha = parameters.alpha !== undefined ? parameters.alpha : false,
@@ -33877,7 +33877,7 @@ THREE.CanvasRenderer = function () {
 
 	console.error( 'THREE.CanvasRenderer has been moved to /examples/js/renderers/CanvasRenderer.js' );
 
-	this.domElement = document.createElementNS( 'http://www.w3.org/1999/xhtml', 'html5_games_01' );
+	this.domElement = document.createElementNS( 'http://www.w3.org/1999/xhtml', 'canvas' );
 	this.clear = function () {};
 	this.render = function () {};
 	this.setClearColor = function () {};
