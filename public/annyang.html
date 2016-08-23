@@ -32,6 +32,7 @@
     window.addEventListener('load', function(e){
 
         console.log('everything has loaded');
+
         var form = document.getElementsByTagName('form')[0];
         var inputField = document.getElementById('textField');
 
@@ -42,7 +43,7 @@
 
         form.addEventListener('submit', function(e){
             e.preventDefault();
-            console.log('synth: ' + message);
+            console.log('synth: ' + inputField.value);
 
             //do something, TODO: continue here
 
@@ -59,9 +60,15 @@
 
             //define annyang commands
             var commands = {
-                'hello': function() {sayRandomHello();},
-                'eject': function() {saySomething('ejecting');},
-                'open *item': function(item) {saySomething(item + ' has been opened.');},
+                'hello': function() {
+                    sayRandomHello();}
+                ,
+                'eject': function() {
+                    saySomething('ejecting');
+                },
+                'open *item': function(item) {
+                    saySomething(item + ' has been opened.');
+                },
                 'search google for *criteria': function(criteria){
                     saySomething('looking for ' + criteria + ' on Google.');
                     window.open("http://www.google.com/#q=" + criteria);
@@ -77,6 +84,9 @@
 
             //start listening
             annyang.start();
+
+            var speechObject = annyang.getSpeechRecognizer();
+            console.log(speechObject);
         }
 
         //function definitions
