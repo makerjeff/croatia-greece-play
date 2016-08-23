@@ -10,12 +10,12 @@
         {{#each users}}
 
             <div class="list-group-item col-md-4 col-sm-6 col-xs-12">
-                <div class="list-group-item-heading">
-                    {{firstname}} {{lastname}}, Age: {{age}}
-                </div>
-                <div class="list-group-item-text">
-                    {{email}}
-                </div>
+                <h4 class="list-group-item-heading">
+                    {{firstname}} {{lastname}}, <span class="label label-info">{{age}}</span>
+                </h4>
+                <p class="list-group-item-text">
+                    <a href="mailto:{{email}}">{{email}}</a>
+                </p>
             </div>
 
         {{/each}}
