@@ -1,13 +1,65 @@
 <!-- List O People Page -->
+<!-- Handlebars on the front end -->
 
+<head>
+    <script src="/lib/handlebars.min.js"></script>
+    <script src="/lib/jquery.min.js"></script>
+
+
+    <!--front end template-->
+    <script id="peopleTemplate" type="text/x-handlebars-template">
+        \{{#each}}
+            <div><span class="fa fa-user" style="color: rgba(200,100,100,1.0);"></span>
+                \{{firstname}}, \{{lastname}} <span class="label label-success">\{{age}}</span>,
+                <a href="#">\{{email}}</a>
+            </div>
+        \{{/each}}
+    </script>
+
+    <!--second template since first doesn't work-->
+    <script id="secondTemplate" type="text/x-handlebars-template">
+        <h1>This is finally working.</h1>
+    </script>
+
+</head>
+
+<!-- MAIN HTML -->
 <div class="container jeffBox">
     {{#each users}}
         <div><span class="fa fa-user" style="color: rgba(100,200,100,1.0);"></span>
             {{firstname}} {{lastname}}
             <span class="label label-info">{{age}}</span>,
-            <a href="mailto:{{{email}}}">{{email}}</a></div>
+            <a href="mailto:{{{email}}}">{{email}}</a>
+        </div>
     {{/each}}
 
     <h3><a href="/add-people"><span class="fa fa-plus-circle"></span> user</a></h3>
+    <button id="button" class="btn btn-success">get data</button>
+
+    <!-- Dump results to here -->
+    <div id="peopleResults"></div>
 </div>
+
+<!-- LOGIC-->
+<script>
+
+    // !!!!! DOES NOT WORK !!!!!! FIGURE OUT WHY.
+    window.addEventListener('load', function(e){
+
+        var peopleTemplate = Handlebars.compile($('secondTemplate').html());
+        var button = document.getElementById('button');
+        var resultDiv = document.getElementById('peopleResults');
+
+        button.addEventListener('click', function(e){
+            e.preventDefault();
+
+            //jquery AJAX cheat codes
+            $.ajax('/list-o-people', {
+                success: function(data){
+                    resultDiv.html(peopleTemplate(data));
+                }
+            });
+        });
+    });
+</script>
 
