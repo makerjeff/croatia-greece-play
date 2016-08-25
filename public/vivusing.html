@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vivus.JS</title>
+    <script src="/lib/vivus.js"></script>
+</head>
+<body>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 490 347" style="enable-background:new 0 0 490 347;" xml:space="preserve" width="300px" height="300px">
+<style type="text/css">
+	.st0{fill:none;stroke:#5EBB47;stroke-width:33;stroke-linecap:round;stroke-miterlimit:10;}
+    .st1{fill:none;stroke:#BA49A0;stroke-width:33;stroke-linecap:round;stroke-miterlimit:10;}
+    .st2{fill:none;stroke:#4C49B7;stroke-width:33;stroke-linecap:round;stroke-miterlimit:10;}
+</style>
+
+    <defs>
+        <filter id="f1" x="0" y="0">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="f1"></feGaussianBlur>
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="f1"></feColorMatrix>
+            <feBlend in="SourceGraphic" in2="f1"></feBlend>
+        </filter>
+    </defs>
+<path data-delay="0" class="st0" filter="url(#f1)" d="M71.8,240.7c15.4-6.6,285.7-51.6,235.2-159.3s-204.5-55-175.9,12s190.1,147.3,252.7,147.3"/>
+<path data-delay="60" class="st1" filter="url(#f1)" d="M99,283c0,0,231.8-44.8,221-152.8S134.3,54.8,129,142c-4.1,67.5,194.6,149,254.8,147"/>
+<path data-delay="120" class="st2" filter="url(#f1)" d="M145,317c25-9,203-68,209-141.5S96,112,99,186s190,137,239,141"/>
+</svg>
+
+<script>
+
+    var stepKeeper = 1;
+
+    window.addEventListener('load', function(e){
+        var svgElement = document.getElementById('Layer_1');
+        var vivus = new Vivus('Layer_1', { duration: 200, pathTimingFunction: Vivus.LINEAR, animTimingFunction: Vivus.EASE}, function(){
+            //restartAnimation(this);
+        });
+
+        svgElement.addEventListener('click', function(e){
+            stepKeeper = 1; //reset
+            restartAnimation(vivus);
+        });
+    });
+
+    //'hAlper' functions
+    function restartAnimation(vivusObject){
+
+
+        vivusObject.reset();
+        vivusObject.play(stepKeeper);
+        console.log('playing again at ' + stepKeeper.toFixed(2) + ' speed.');
+        stepKeeper += 0.05;
+
+    }
+
+</script>
+
+
+</body>
+</html>

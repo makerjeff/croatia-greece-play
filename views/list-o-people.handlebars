@@ -21,7 +21,8 @@
 
     <!--second template since first doesn't work-->
     <script id="secondTemplate" type="text/x-handlebars-template">
-        <h1>This is finally working.</h1>
+        <h1><span class="fa fa-thumbs-up"></span> This is finally working.</h1>
+        <p>(from 'secondTemplate')</p>
     </script>
 
 </head>
@@ -49,7 +50,7 @@
     // !!!!! DOES NOT WORK !!!!!! FIGURE OUT WHY.
     window.addEventListener('load', function(e){
 
-        var peopleTemplate = Handlebars.compile($('secondTemplate').html());
+        var peopleTemplate = Handlebars.compile($('#secondTemplate').html());
         var button = document.getElementById('button');
         var resultDiv = document.getElementById('peopleResults');
 
@@ -59,7 +60,11 @@
             //jquery AJAX cheat codes
             $.ajax('/list-o-people', {
                 success: function(data){
-                    resultDiv.html(peopleTemplate(data));
+                    resultDiv.innerHTML = peopleTemplate(data);
+                },
+                error: function(jqXHR, status, err){
+                    resultDiv.innerHTML = 'status: ' + status + ', error: ' + err;
+                    console.log(jqXHR);
                 }
             });
         });

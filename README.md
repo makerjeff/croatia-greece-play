@@ -89,4 +89,10 @@ To load the Three.JS examples:
 ## NOTES Handlebars
 - [Learn Handlebars in 10 minutes](http://tutorialzine.com/2015/01/learn-handlebars-in-10-minutes/)
 
+## NOTES FrontEnd Tricks
+- [Event.keyCode Constants](https://msdn.microsoft.com/en-us/library/aa243025(v=vs.60).aspx)
+- [CSS-Tricks: SVG Line Animations](https://css-tricks.com/svg-line-animation-works/)
+- [SVG Filters](http://www.w3schools.com/svg/svg_fegaussianblur.asp)
+- [Gooey Effect Using SVG Filters](https://css-tricks.com/gooey-effect/)
+
 
