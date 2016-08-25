@@ -170,7 +170,7 @@ var dummyData = require('./models/dummyData.js');
 // ==========================================
 // SETUP ====================================
 // ==========================================
-//set up Handlebars as view engine
+// -- set up Handlebars as view engine --
 // var handlebars = require('express-handlebars').create({defaultLayout:'main});
 var handlebarsModule = require('express-handlebars');
 var handlebars = handlebarsModule.create({
@@ -232,7 +232,7 @@ app.use(bodyParser.urlencoded({extended: false}));   //updated past book
 //for cookies (modified from book)
 app.use(cookieParser(credentials.cookieSecret));
 
-// =====  PARTIALS ===== (res.locals.partials)
+// ========== PARTIALS =========== (res.locals.partials)
 app.use(function(req, res, next){
     if(!res.locals.partials) res.locals.partials = {};
     res.locals.partials.weather = dummyData.getWeatherData();
