@@ -3,7 +3,9 @@
  * First Express based server, entry point to web app.
  */
 
-/* #################### MODULES #################### */
+// ==================================================
+// LOAD MODULES =====================================
+// ==================================================
 var express = require('express');
 var app = express();
 var colors = require('colors');
@@ -164,7 +166,10 @@ var credentials = require('./credentials.js');
 //grab dummyDataModule (model)
 var dummyData = require('./models/dummyData.js');
 
-/* #################### SETUP #################### */
+
+// ==========================================
+// SETUP ====================================
+// ==========================================
 //set up Handlebars as view engine
 // var handlebars = require('express-handlebars').create({defaultLayout:'main});
 var handlebarsModule = require('express-handlebars');
@@ -192,9 +197,9 @@ app.set('view-cache', true);
 app.set('port', process.env.PORT || 3000);
 
 
-
-/* #################### MIDDLEWARE #################### */
-
+// =======================================
+// MIDDLEWARE ============================
+// =======================================
 
 //Disable website if database connection is not established. (JWX)
 app.use(function(req,res,next){
@@ -253,7 +258,9 @@ app.use(function(req,res,next){
     next();
 });
 
-/* #################### ROUTES #################### */
+// ====================================
+// ROUTES =============================
+// ====================================
 app.get('/', function(req, res){
     res.render('home');
 });
@@ -472,30 +479,24 @@ app.get('/view-people', function(req,res){
             console.log('an error has occurred: ' + err);
             return res.render('view-people', {error: 'database error occurred!'});
         } else {
-            console.log(data[data.length - 1]);
-            //TODO: clean up the data object before passing on to the front end.
-
-            res.render('view-people', {users: data});   //put into a 'user' object to pass to the view.
+            res.render('view-people', {users: formatData(data)});   //put into a 'user' object to pass to the view.
         }
     });
 });
-
-
 
 // getting the add-people page
 app.get('/add-people', function(req,res){
     //render add-people page
     res.render('add-people', {dummyData: 'Data is passing fine, from backend to frontend.', csrf: 'crsf token goes here'});
 });
+
 // posting the data
 app.post('/add-people', function(req,res){
-    //do stuff here
-    
-    //add a person to db
+    //add a person to db, using function chaining and anonymous variable
     new Person({
-        firstname: req.body.firstname_data,
-        lastname: req.body.lastname_data,
-        email: req.body.email_data,
+        firstname: req.body.firstname_data.toLowerCase(),
+        lastname: req.body.lastname_data.toLowerCase(),
+        email: req.body.email_data.toLowerCase(),
         age: req.body.age_data
     }).save();
     console.log('person added'.green);
@@ -514,7 +515,26 @@ app.get('/people-thank-you', function(req, res){
     res.render('people-thank-you', {datyum: 'pass this back to the front end.'});
 });
 
-/***** Catch-Alls *****/
+
+// ---------- handlebars front end play -------------
+//list-o-people related
+app.get('/list-o-people', function(req, res){
+
+    var contextObject = {};
+
+    var data = Person.find({}, function(err, data){
+        if(err){
+            return res.end('this is not working.');
+        } else {
+
+            res.render('list-o-people', {users: formatData(data)});
+        }
+    });
+});
+
+// ====================================
+// CATCH-ALL MIDDLEWARE ===============
+// ====================================
 
 // serve static files
 app.use(express.static(__dirname + '/public'));
@@ -531,8 +551,46 @@ app.use(function(req,res,next){
     res.render('500');
 });
 
-/* #################### START SERVER #################### */
+// =====================================
+// START SERVER ========================
+// =====================================
 //using an app getter then running the 'listen()' function.
 app.listen(app.get('port'), function(){
     console.log('Express'.blue + ' started on http://localhost: ' + app.get('port') +'; ' + 'press CTRL-C to terminate.'.yellow);
 });
+
+
+// =====================================
+// HELPER FUNCTIONS ====================
+// =====================================
+//TODO: move to external library
+
+/**
+ * Capitalize the first letter of the input string.
+ * @param string Lowercase string you want to capitalize.
+ * @returns {string}
+ */
+function formatName(string) {
+    return string.toString()[0].toUpperCase() + string.slice(1);
+}
+
+
+/**
+ * Format data returned from Mongoose for frontend consumption.
+ * Returns an array of objects to be passed in to the templating context.
+ * @param obj Object to pass in.
+ */
+function formatData(obj) {
+    var filteredData = [];
+    obj.forEach(function(elem, arr, ind){
+        var d = {
+            firstname: formatName(elem.firstname),
+            lastname: formatName(elem.lastname),
+            age: elem.age,
+            email: elem.email
+        };
+        //push each element to
+        filteredData.push(d);
+    });
+    return filteredData;
+}

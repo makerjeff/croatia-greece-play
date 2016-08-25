@@ -1,0 +1,13 @@
+<!-- List O People Page -->
+
+<div class="container jeffBox">
+    {{#each users}}
+        <div><span class="fa fa-user" style="color: rgba(100,200,100,1.0);"></span>
+            {{firstname}} {{lastname}}
+            <span class="label label-info">{{age}}</span>,
+            <a href="mailto:{{{email}}}">{{email}}</a></div>
+    {{/each}}
+
+    <h3><a href="/add-people"><span class="fa fa-plus-circle"></span> user</a></h3>
+</div>
+

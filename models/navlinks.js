@@ -14,7 +14,8 @@ var navlinks = {
         {text: 'vacations', url: '/vacations', alt: 'Vacations'},
         {text: 'headers', url:'/headers', alt: 'Headers debugging page.', debug: true},
         {text: 'add people', url: '/add-people', alt: 'add people as a test', debug: true},
-        {text: 'view people', url: '/view-people', alt: 'view list of people', info: true}
+        {text: 'view people', url: '/view-people', alt: 'view list of people', info: true},
+        {text: 'list-o-peeps (hb front-end)', url: '/list-o-people', alt: 'see a list of people, but using front end templating', info: true}
     ]
 };
 
