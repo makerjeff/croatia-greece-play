@@ -543,30 +543,35 @@ app.get('/data/list-o-people', function(req,res){
     //     }
     // });
 
-    var userData = [
-        {
-            firstname: 'dummyFirst2',
-            lastname: 'dummyLast2',
-            age: 48,
-            email: 'dummydummy2@gmail.com'
-        },
-        {
-            firstname: 'dummyFirst3',
-            lastname: 'dummyLast3',
-            age: 48,
-            email: 'dummydummy3@gmail.com'
-        },
-        {
-            firstname: 'dummyFirst4',
-            lastname: 'dummyLast4',
-            age: 48,
-            email: 'dummydummy4@gmail.com'
-        }
-    ];
+    var userData = {
+        users:[
+            {
+                firstname: 'dummyFirst2',
+                lastname: 'dummyLast2',
+                age: 48,
+                email: 'dummydummy2@gmail.com'
+            },
+            {
+                firstname: 'dummyFirst3',
+                lastname: 'dummyLast3',
+                age: 48,
+                email: 'dummydummy3@gmail.com'
+            },
+            {
+                firstname: 'dummyFirst4',
+                lastname: 'dummyLast4',
+                age: 48,
+                email: 'dummydummy4@gmail.com'
+            }
+        ],
+        debug: true
+    };
 
 
 
     res.json(userData);
+
+
 
     // res.json({
     //     firstname: 'dummyFirst',
@@ -623,6 +628,7 @@ function formatName(string) {
  * Format data returned from Mongoose for frontend consumption.
  * Returns an array of objects to be passed in to the templating context.
  * @param obj Object to pass in.
+ * @returns {array}
  */
 function formatData(obj) {
     var filteredData = [];

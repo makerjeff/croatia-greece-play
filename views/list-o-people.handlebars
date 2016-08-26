@@ -25,6 +25,10 @@
     <script id="tableTemplate" type="text/x-handlebars-template">
         <h1><span class="fa fa-user"></span> List o' Peeps</h1>
 
+        \{{#if debug}}
+            <h2><span class="fa fa-bug" style="color: rgba(244,200,200,1.0)"></span> Debug mode active.</h2>
+        \{{/if}}
+
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -40,16 +44,17 @@
 
                 <!-- templating magic, just need to pass 'users' object-->
 
-                {{#each}}
-                    <tr>
-
-                        <td>\{{firstname}}</td>
+                \{{#each users}}
+                    <tr  id="\{{firstname}}\{{lastname}}\{{age}}">
+                        <!--these work when passed in data from the backend (without the escaping)-->
+                        <td class="clickEditable">\{{firstname}}</td>
                         <td>\{{lastname}}</td>
                         <td>\{{age}}</td>
                         <td>\{{email}}</td>
+                        <!--TODO: use custom data-<attribute> to identify which ID to target when updating.-->
 
                     </tr>
-                {{/each}}
+                \{{/each}}
                 </tbody>
             </table>
         </div>
@@ -68,6 +73,7 @@
     {{/each}}
 
     <h3><a href="/add-people"><span class="fa fa-plus-circle"></span> user</a></h3>
+    <button id="localButton" class="btn btn-default">get local data</button>
     <button id="button" class="btn btn-success">get data</button>
 
     <!-- Dump results to here -->
@@ -80,25 +86,53 @@
     // !!!!! DOES NOT WORK !!!!!! FIGURE OUT WHY.
     window.addEventListener('load', function(e){
 
-        var chosenTemplate = Handlebars.compile($('#tableTemplate').html());   //modify here for diff template view
-        var button = document.getElementById('button');
-        var resultDiv = document.getElementById('peopleResults');
+        var localData = {
+            users:[
+                {firstname: 'jeff', lastname:'wu', age:32, email:'jefferson.wu@180la.com'},
+                {firstname: 'toon', lastname:'leyson', age: 26, email:'toon.leyson@180la.com'},
+                {firstname: 'stacey', lastname:'savage', age: 40, email:'stacey.savage@180la.com'}
+            ],
+            debug: true
+        };
 
+        var chosenTemplate = Handlebars.compile($('#tableTemplate').html());   //modify here for diff template view
+        var localButton = document.getElementById('localButton');
+        var button = document.getElementById('button');
+        var resultDiv = $('#peopleResults');
+
+        //localData button
+        localButton.addEventListener('click', function(e){
+            e.preventDefault();
+            console.log(localData);
+
+            resultDiv.html(chosenTemplate(localData));
+            editSomething(resultDiv);
+        });
+
+
+        //getData button
         button.addEventListener('click', function(e){
             e.preventDefault();
 
             //jquery AJAX cheat codes
             $.ajax('/data/list-o-people', {
                 success: function(data){
-                    resultDiv.innerHTML = chosenTemplate(data);
+                    resultDiv.html(chosenTemplate(data));
                     console.log(data);
                 },
                 error: function(jqXHR, status, err){
-                    resultDiv.innerHTML = 'status: ' + status + ', error: ' + err;
+                    resultDiv.html('status: ' + status + ', error: ' + err);
                     console.log(jqXHR);
                 }
             });
         });
     });
+
+
+
+    function editSomething(div){
+        var listItems = document.getElementsByClassName('clickEditable');
+        console.log(listItems);
+    }
 </script>
 
