@@ -3,26 +3,56 @@
 
 <head>
     <script src="/lib/handlebars.min.js"></script>
-
-
-    <!--front end template-->
-    <script id="peopleTemplate" type="text/x-handlebars-template">
-        \{{#each}}
-            <div><span class="fa fa-user" style="color: rgba(200,100,100,1.0);"></span>
-                \{{firstname}}, \{{lastname}} <span class="label label-success">\{{age}}</span>,
-                <a href="#">\{{email}}</a>
-            </div>
-        \{{/each}}
-    </script>
-
-    <!--does loading JQUERY later make a diff?-->
     <script src="/lib/jquery.min.js"></script>
 
+
+    <!-- ========== TEMPLATES ========== -->
+    <!--front end template-->
+    <script id="peopleTemplate" type="text/x-handlebars-template">
+        <div><span class="fa fa-user" style="color: rgba(200,100,100,1.0);"></span>
+            \{{firstname}}, \{{lastname}} <span class="label label-success">\{{age}}</span>,
+            <a href="#">\{{email}}</a>
+        </div>
+    </script>
 
     <!--second template since first doesn't work-->
     <script id="secondTemplate" type="text/x-handlebars-template">
         <h1><span class="fa fa-thumbs-up"></span> This is finally working.</h1>
         <p>(from 'secondTemplate')</p>
+    </script>
+
+    <!-- table template -->
+    <script id="tableTemplate" type="text/x-handlebars-template">
+        <h1><span class="fa fa-user"></span> List o' Peeps</h1>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Age</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                <!-- templating magic, just need to pass 'users' object-->
+
+                {{#each}}
+                    <tr>
+
+                        <td>\{{firstname}}</td>
+                        <td>\{{lastname}}</td>
+                        <td>\{{age}}</td>
+                        <td>\{{email}}</td>
+
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
     </script>
 
 </head>
@@ -50,7 +80,7 @@
     // !!!!! DOES NOT WORK !!!!!! FIGURE OUT WHY.
     window.addEventListener('load', function(e){
 
-        var peopleTemplate = Handlebars.compile($('#secondTemplate').html());
+        var chosenTemplate = Handlebars.compile($('#tableTemplate').html());   //modify here for diff template view
         var button = document.getElementById('button');
         var resultDiv = document.getElementById('peopleResults');
 
@@ -58,9 +88,10 @@
             e.preventDefault();
 
             //jquery AJAX cheat codes
-            $.ajax('/list-o-people', {
+            $.ajax('/data/list-o-people', {
                 success: function(data){
-                    resultDiv.innerHTML = peopleTemplate(data);
+                    resultDiv.innerHTML = chosenTemplate(data);
+                    console.log(data);
                 },
                 error: function(jqXHR, status, err){
                     resultDiv.innerHTML = 'status: ' + status + ', error: ' + err;

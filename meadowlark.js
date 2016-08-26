@@ -532,6 +532,50 @@ app.get('/list-o-people', function(req, res){
     });
 });
 
+// list-o-people data
+app.get('/data/list-o-people', function(req,res){
+
+    // var data = Person.find({}, function(err, data){
+    //     if(err){
+    //         return res.end('failed.');      //TODO: make this a JSON response so it can show on front end.
+    //     } else {
+    //         res.json({users: data});
+    //     }
+    // });
+
+    var userData = [
+        {
+            firstname: 'dummyFirst2',
+            lastname: 'dummyLast2',
+            age: 48,
+            email: 'dummydummy2@gmail.com'
+        },
+        {
+            firstname: 'dummyFirst3',
+            lastname: 'dummyLast3',
+            age: 48,
+            email: 'dummydummy3@gmail.com'
+        },
+        {
+            firstname: 'dummyFirst4',
+            lastname: 'dummyLast4',
+            age: 48,
+            email: 'dummydummy4@gmail.com'
+        }
+    ];
+
+
+
+    res.json(userData);
+
+    // res.json({
+    //     firstname: 'dummyFirst',
+    //     lastname: 'dummyLast',
+    //     age: 47,
+    //     email: 'dummyFirstDummyLast@dummy.com'
+    // });
+});
+
 // ====================================
 // CATCH-ALL MIDDLEWARE ===============
 // ====================================
@@ -593,4 +637,9 @@ function formatData(obj) {
         filteredData.push(d);
     });
     return filteredData;
+}
+
+function formatDataToObject(obj){
+    var filteredDataObject = {};
+    //TODO: loop through and add properties to filteredDataObject
 }
