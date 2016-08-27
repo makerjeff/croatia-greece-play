@@ -37,6 +37,7 @@
                         <th>Lastname</th>
                         <th>Age</th>
                         <th>Email</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
 
@@ -51,6 +52,7 @@
                         <td>\{{lastname}}</td>
                         <td>\{{age}}</td>
                         <td>\{{email}}</td>
+                        <td><span class="fa fa-minus-circle grabMe"></span></td>
                         <!--TODO: use custom data-<attribute> to identify which ID to target when updating.-->
 
                     </tr>
@@ -63,14 +65,24 @@
 </head>
 
 <!-- MAIN HTML -->
+
+<!--LOAD SPINNER -->
+<div class="loadingSpinnerContainer">
+    <div class="loadingSpinner">
+        <span class="fa fa-spinner fa-pulse fa-3x"></span>
+    </div>
+</div>
+<!-- LOAD SPINNER-END -->
+
+<!-- MAIN BODY -->
 <div class="container jeffBox">
-    {{#each users}}
-        <div><span class="fa fa-user" style="color: rgba(100,200,100,1.0);"></span>
-            {{firstname}} {{lastname}}
-            <span class="label label-info">{{age}}</span>,
-            <a href="mailto:{{{email}}}">{{email}}</a>
-        </div>
-    {{/each}}
+    <!--{{#each users}}-->
+        <!--<div><span class="fa fa-user" style="color: rgba(100,200,100,1.0);"></span>-->
+            <!--{{firstname}} {{lastname}}-->
+            <!--<span class="label label-info">{{age}}</span>,-->
+            <!--<a href="mailto:{{{email}}}">{{email}}</a>-->
+        <!--</div>-->
+    <!--{{/each}}-->
 
     <h3><a href="/add-people"><span class="fa fa-plus-circle"></span> user</a></h3>
     <button id="localButton" class="btn btn-default">get local data</button>
@@ -80,12 +92,19 @@
     <div id="peopleResults"></div>
 </div>
 
+<!-- MAIN BODY - END -->
+
 <!-- LOGIC-->
 <script>
 
-    // !!!!! DOES NOT WORK !!!!!! FIGURE OUT WHY.
-    window.addEventListener('load', function(e){
+    var $loadSpinner = $('.loadingSpinnerContainer');
 
+    window.addEventListener('DOMContentLoaded', function(e){
+        $loadSpinner.hide();
+    });
+
+
+    window.addEventListener('load', function(e){
         var localData = {
             users:[
                 {firstname: 'jeff', lastname:'wu', age:32, email:'jefferson.wu@180la.com'},
@@ -94,7 +113,6 @@
             ],
             debug: true
         };
-
         var chosenTemplate = Handlebars.compile($('#tableTemplate').html());   //modify here for diff template view
         var localButton = document.getElementById('localButton');
         var button = document.getElementById('button');
@@ -106,7 +124,6 @@
             console.log(localData);
 
             resultDiv.html(chosenTemplate(localData));
-            editSomething(resultDiv);
         });
 
 
@@ -114,11 +131,15 @@
         button.addEventListener('click', function(e){
             e.preventDefault();
 
+            $loadSpinner.show();
+
             //jquery AJAX cheat codes
             $.ajax('/data/list-o-people', {
                 success: function(data){
                     resultDiv.html(chosenTemplate(data));
                     console.log(data);
+                    $loadSpinner.hide();
+                    deleteUser();
                 },
                 error: function(jqXHR, status, err){
                     resultDiv.html('status: ' + status + ', error: ' + err);
@@ -129,10 +150,24 @@
     });
 
 
+    function deleteUser(){
+        var listOfUserButtons = document.getElementsByClassName('grabMe');
+        console.log(listOfUserButtons);
 
-    function editSomething(div){
-        var listItems = document.getElementsByClassName('clickEditable');
-        console.log(listItems);
+        //grab all the table-row parent nodes and add functionality.
+        //TODO: add delete functionality.
+        //TODO: move functionality over to external JS file.
+        for (var i = 0; i < listOfUserButtons.length; i++){
+            console.log(listOfUserButtons[i].parentNode.parentNode);
+
+            listOfUserButtons[i].parentNode.parentNode.addEventListener('click', function(e){
+                console.log('clicked ' + this.id);
+
+                this.classList.add('success');
+            });
+        }
+
     }
+
 </script>
 

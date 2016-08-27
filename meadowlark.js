@@ -535,13 +535,13 @@ app.get('/list-o-people', function(req, res){
 // list-o-people data
 app.get('/data/list-o-people', function(req,res){
 
-    // var data = Person.find({}, function(err, data){
-    //     if(err){
-    //         return res.end('failed.');      //TODO: make this a JSON response so it can show on front end.
-    //     } else {
-    //         res.json({users: data});
-    //     }
-    // });
+    var data = Person.find({}, function(err, data){
+        if(err){
+            return res.end('failed.');
+        } else {
+            res.json({users: formatData(data)});
+        }
+    });
 
     var userData = {
         users:[
@@ -566,19 +566,6 @@ app.get('/data/list-o-people', function(req,res){
         ],
         debug: true
     };
-
-
-
-    res.json(userData);
-
-
-
-    // res.json({
-    //     firstname: 'dummyFirst',
-    //     lastname: 'dummyLast',
-    //     age: 47,
-    //     email: 'dummyFirstDummyLast@dummy.com'
-    // });
 });
 
 // ====================================
