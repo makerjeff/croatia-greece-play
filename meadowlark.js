@@ -542,30 +542,6 @@ app.get('/data/list-o-people', function(req,res){
             res.json({users: formatData(data)});
         }
     });
-
-    var userData = {
-        users:[
-            {
-                firstname: 'dummyFirst2',
-                lastname: 'dummyLast2',
-                age: 48,
-                email: 'dummydummy2@gmail.com'
-            },
-            {
-                firstname: 'dummyFirst3',
-                lastname: 'dummyLast3',
-                age: 48,
-                email: 'dummydummy3@gmail.com'
-            },
-            {
-                firstname: 'dummyFirst4',
-                lastname: 'dummyLast4',
-                age: 48,
-                email: 'dummydummy4@gmail.com'
-            }
-        ],
-        debug: true
-    };
 });
 
 // ====================================
