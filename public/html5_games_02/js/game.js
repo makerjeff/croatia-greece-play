@@ -11,17 +11,34 @@
 
     for(var x = 0; x < vendors.length && !window.requestAnimationFrame; x++) {
         window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
     }
 
-    //TODO: continue here
+    //if window.requestAnimationFrame doesn't exist...
+    if(!window.requestAnimationFrame){
+        window.requestAnimationFrame = function(callback, element){
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0,16-(currTime - lastTime));
+            var id = window.setTimeout(function(){
+                callback(currTime + timeToCall);
+            },timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+    }
+    //if window.cancelAnimationFrame doesn't exist...
+    if(!window.cancelAnimationFrame){
+        window.cancelAnimationFrame = function(id){
+            clearTimeout(id);
+        };
+    }
 }());
 
 
 
 
 /* ########## SETUP OBJECTS ########## */
-//create a game object
+// ----- create a game object -----
 var game = {
     /**
      * Start initializing objects, preload assets, and display start screen.
@@ -38,8 +55,8 @@ var game = {
         game.context = game.canvas.getContext('2d');    //get handler for context
     },
     showLevelScreen: function(){
-        $('.gamelayer').hide();
-        $('#levelselectscreen').show(750);
+        $('.gamelayer').hide(250);
+        $('#levelselectscreen').show(250);
     }
 }
 
