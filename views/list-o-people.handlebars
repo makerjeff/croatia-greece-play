@@ -97,6 +97,9 @@
 <!-- LOGIC-->
 <script>
 
+    //
+    var selectedForDeletion = [];
+
     var $loadSpinner = $('.loadingSpinnerContainer');
 
     window.addEventListener('DOMContentLoaded', function(e){
@@ -139,7 +142,7 @@
                     resultDiv.html(chosenTemplate(data));
                     console.log(data);
                     $loadSpinner.hide();
-                    deleteUser();
+                    selectUsers();
                 },
                 error: function(jqXHR, status, err){
                     resultDiv.html('status: ' + status + ', error: ' + err);
@@ -150,20 +153,44 @@
     });
 
 
-    function deleteUser(){
+    /**
+     * Select users and put them in a 'selectedForDeletion' array. Precursor to 'deleteUsers'.
+     */
+    function selectUsers(){
         var listOfUserButtons = document.getElementsByClassName('grabMe');
-        console.log(listOfUserButtons);
+
+       // console.log(listOfUserButtons);
 
         //grab all the table-row parent nodes and add functionality.
         //TODO: add delete functionality.
         //TODO: move functionality over to external JS file.
         for (var i = 0; i < listOfUserButtons.length; i++){
+
+            //log the table rows
             console.log(listOfUserButtons[i].parentNode.parentNode);
 
+            //if add click effect
             listOfUserButtons[i].parentNode.parentNode.addEventListener('click', function(e){
-                console.log('clicked ' + this.id);
 
-                this.classList.add('success');
+                //console.log('clicked ' + this.id);
+
+                //--- unselect ---
+                if(this.classList.contains('success')){
+                    this.classList.remove('success');
+
+                    //remove from array
+                    var index = selectedForDeletion.indexOf(this);
+                    if(index > -1){
+                        selectedForDeletion.splice(index, 1);
+                        console.log(selectedForDeletion);
+                    }
+
+                } else {
+                    //--- select ---
+                    this.classList.add('success');
+                    selectedForDeletion.push(this);
+                    console.log(selectedForDeletion);
+                }
             });
         }
 
