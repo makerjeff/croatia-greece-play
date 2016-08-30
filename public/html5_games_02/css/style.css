@@ -62,3 +62,25 @@ html, body {
     font: 12px Arial;
 }
 
+/* SCORE SCREEN */
+#scorescreen {
+    height: 60px;
+    font: 32px "Comic Sans MS";
+    text-shadow: 0 0 2px #000;
+    color: white;
+}
+
+#scorescreen image {
+    opacity: 0.6;
+    top: 10px;
+    position: relative;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+#scorescreen #score {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+}
+

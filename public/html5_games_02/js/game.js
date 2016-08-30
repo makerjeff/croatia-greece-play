@@ -4,7 +4,10 @@
 
 /* ########## POLYFILLS ########## */
 
-// requestAnimationFrame polyfill (wrapped in an IIFE!)
+// =======================================
+// REQUEST ANIMATION FRAME POLYFILL ======
+// =======================================
+
 (function(){
     var lastTime = 0;
     var vendors = ['ms','moz', 'webkit', '0'];
@@ -36,9 +39,12 @@
 
 
 
-
 /* ########## SETUP OBJECTS ########## */
-// ----- create a game object -----
+
+// ==================================
+// CREATE GAME OBJECT ===============
+// ==================================
+
 var game = {
     /**
      * Start initializing objects, preload assets, and display start screen.
@@ -57,10 +63,51 @@ var game = {
     showLevelScreen: function(){
         $('.gamelayer').hide(250);
         $('#levelselectscreen').show(250);
-    }
-}
+    },
 
-//create levels object, with level data and functions
+    // GAME MODE
+    mode: 'intro',
+    slingshotX: 140,    // X coordinate of slingshot
+    slingshotY: 280,    //Y coordinate of slingshot
+
+    start: function(){
+        $('.gamelayer').hide();     //hide game layers
+        $('#gamecanvas').show();    //show game canvas
+        $('#scorescreen').show();   //show score screen
+
+        game.mode = 'intro';
+        game.offsetLeft=0;
+        game.ended=false;
+        game.animationFrame = window.requestAnimationFrame(game.animate, game.canvas);
+    },
+
+    handlePanning: function(){
+        game.offsetLeft++;  //temporary placeholder that keeps panning to the right.
+    },
+
+    animate: function(){
+        game.handlePanning();   //animate background
+        // animate characters.
+
+        // draw background with parallax scrolling.  TODO: Figure out why this doesn't work.
+        game.context.drawImage(game.currentLevel.backgroundImage, game.offsetLeft/4, 0, 640, 480, 0, 0, 640, 480);
+        game.context.drawImage(game.currentLevel.foregroundImage, game.offsetLeft, 0, 640, 480, 0, 0, 640, 480);
+
+        // draw slingshot
+        game.context.drawImage(game.slingshotImage, game.slingshotX - game.offsetLeft, game.slingshotY);
+        game.context.drawImage(game.slingshotFrontImage, game.slingshotX - game.offsetLeft, game.slingshotY);
+
+        if(!game.ended){
+            game.animationFrame = window.requestAnimationFrame(game.animate, game.canvas);
+        }
+    },
+
+};
+
+// ==================================
+// CREATE LEVEL OBJECT ==============
+// ==================================
+
 var levels = {
     data: [
         {
@@ -102,7 +149,7 @@ var levels = {
         });
     },
 
-    //load all data and images for a specific level
+    //load all data and images for a specific level, add it to the 'game' object.
     load: function(number){
         //declare a new currentLevel object
         game.currentLevel = {
@@ -115,7 +162,7 @@ var levels = {
 
         var level = levels.data[number];
 
-        //load backgroud, foreground, slingshot images
+        //load images, then create objects under the 'game' object above.
         game.currentLevel.backgroundImage = loader.loadImage('../images/backgrounds/' + level.background + '.png');
         game.currentLevel.foregroundImage = loader.loadImage('../images/backgrounds/' + level.foreground + '.png');
         game.slingshotImage = loader.loadImage('../images/slingshot.png');
@@ -130,7 +177,10 @@ var levels = {
     }
 };
 
-//Asset loader object
+// ==================================
+// ASSET LOADER OBJECT ==============
+// ==================================
+
 var loader = {
     loaded: true,
     loadedCount: 0, //Assets that have been loaded so far.
@@ -138,6 +188,7 @@ var loader = {
 
     //init function
     init: function(){
+
         //check for sound support
         var mp3Support, oggSupport;
         var audio = document.createElement('audio');
@@ -202,8 +253,10 @@ var loader = {
     }
 };
 
+// ==================================
+// RUN THE GAME =====================
+// ==================================
 
-/* ########## RUN GAME ########## */
 //jquery 3.0 syntax
 $(window).on('load', function(e){
     console.log('everything has loaded. ');
@@ -211,10 +264,6 @@ $(window).on('load', function(e){
     //initialize game
     game.init();
 
-    // //event listeners for modern approach. book uses onclick= function calls.
-    // document.getElementById('playButton').addEventListener('click', function(e){
-    //     game.showLevelScreen();
-    // });
     $('#playButton').on('click', function(e){
         game.showLevelScreen();
     });
