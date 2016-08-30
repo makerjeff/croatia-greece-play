@@ -81,6 +81,8 @@ To load the Three.JS examples:
 
 ## NOTES JQuery + Bootstrap
 - [Bootstrap Tags](https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/): Add tags automatically in input fields.
+- [JQuery Masonry](http://masonry.desandro.com/): For 'brick-like' JQuery layouts.
+- [JQuery UI](http://jqueryui.com/): UI Helpers.
 
 ## NOTES Payment Options
 - [PayPal, Enabling Fund Transfers within a Group](https://developer.paypal.com/docs/classic/use-cases/uc_social-transfers-within-group/)
@@ -95,4 +97,6 @@ To load the Three.JS examples:
 - [SVG Filters](http://www.w3schools.com/svg/svg_fegaussianblur.asp)
 - [Gooey Effect Using SVG Filters](https://css-tricks.com/gooey-effect/)
 
+## NOTES HTTPS
+- [Express.JS HTTPS / self-signed SSL using openSSL](http://www.hacksparrow.com/express-js-https.html)
 
