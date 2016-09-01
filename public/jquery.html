@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JQuery Fun</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/masonry.pkgd.js"></script>
+
+    <style>
+        html, body {
+            width:100%;
+            height:100%;
+
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: relative;
+
+            width: 250px;
+            height: 300px;
+
+            box-sizing: border-box;
+
+            background: rgba(255,255,255,0);
+
+            padding: 10px;
+
+
+        }
+
+        /*for inside the box, where content will be*/
+        .innerBox {
+
+            display: flex;
+            position: relative;
+
+            height: 100%;
+            width: 100%;
+
+            justify-content: center;
+            align-items: center;
+
+            border: 5px dotted rgba(50,0,0,1.0);
+            border-radius: 5px;
+
+
+
+        }
+
+
+        /*.box:nth-child(odd) {*/
+            /*background: rgba(230,200,200,1.0);*/
+        /*}*/
+
+        /*.box:nth-child(even){*/
+            /*background: rgba(200,230,200,1.0);*/
+        /*}*/
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 250 }'>
+        <!--<div class="grid-item box"></div>-->
+        <!--<div class="grid-item box"></div>-->
+    </div>
+</div>
+
+
+<script>
+
+    //Masonry, initialize!
+    $('.grid').masonry({itemSelector:'.grid-item', columnWidth: 250});
+
+
+
+    //array of images
+    var imageArray = [
+        'image_001.png',
+        'image_002.png',
+        'image_003.png',
+        'image_004.png',
+        'image_005.png',
+        'image_006.png',
+        'image_007.png',
+        'image_008.png',
+        'image_009.png',
+        'image_010.png',
+        'image_011.png',
+        'image_012.png',
+        'image_013.png',
+        'image_014.png',
+        'image_015.png',
+        'image_016.png',
+        'image_017.png',
+        'image_018.png',
+        'image_019.png',
+        'image_020.png'
+    ];
+
+    //array of sizes
+    var imageHeightArray = ['250px', '300px', '325px', '350px', '200px'];   //array of sizes
+
+
+
+    imageArray.forEach(function(element, array, index){
+        var div = document.createElement('div');
+
+        div.classList.add('box');
+        div.classList.add('grid-item');
+        div.style.height = getRandomHeightFromArray(imageHeightArray);
+
+        var innerDiv = document.createElement('div');
+        innerDiv.classList.add('innerBox');
+        innerDiv.innerHTML = element;
+        innerDiv.style.backgroundColor = getRandomRGBA();
+
+        $(div).append(innerDiv);
+        $('.grid').append(div);
+
+    });
+
+
+    // === 'halper' functions ===
+
+    function getRandomHeightFromArray(array){
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
+    function getRandomRGB() {
+        var r = getRandom8BitValue();
+        var g = getRandom8BitValue();
+        var b = getRandom8BitValue();
+
+        return 'rgb(' + r + ',' + g + ',' + b + ')';
+    }
+
+    function getRandomRGBA(){
+        var r = getRandom8BitValue();
+        var g = getRandom8BitValue();
+        var b = getRandom8BitValue();
+        var a = '1.0';
+
+        return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+    }
+
+    function getRandom8BitValue() {
+        return Math.floor(Math.random() * 256);
+    }
+
+</script>
+
+
+</body>
+</html>
