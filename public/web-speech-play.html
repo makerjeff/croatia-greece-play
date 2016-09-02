@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+    <title>Say Something</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body, html {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        #container {
+            display: flex;
+            position: relative;
+
+            width: 100%;
+            height: 100%;
+
+            flex-direction: column;
+
+            justify-content: center;
+            align-items: center;
+        }
+
+        #title{
+            font-family: Montserrat, sans-serif;
+        }
+
+        #debug_messages {
+            font-family: "Open Sans", sans-serif;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<div id="container">
+    <div id="title" class="normal">
+        <h1>Say Something.</h1>
+    </div>
+
+    <div id="debug_messages">&nbsp; </div>
+
+</div>
+
+<script src="./js/web-speech-play.js"></script>
+
+<script>
+
+    var keys  = [
+        {name: 'monkey', string: 'I am a monkey.'},
+        {name: 'starfish', string: 'I am a starfish'},
+        {name: 'cat', string: 'I am a cat'}
+    ];
+
+</script>
+</body>
+</html>

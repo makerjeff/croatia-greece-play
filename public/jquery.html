@@ -22,7 +22,7 @@
             position: relative;
 
             width: 250px;
-            height: 300px;
+            /*height: 300px;*/
 
             box-sizing: border-box;
 
@@ -52,6 +52,11 @@
 
         }
 
+        .enlarged {
+            width: 100%;
+            height: 400px !important;
+        }
+
 
         /*.box:nth-child(odd) {*/
             /*background: rgba(230,200,200,1.0);*/
@@ -76,7 +81,7 @@
 <script>
 
     //Masonry, initialize!
-    $('.grid').masonry({itemSelector:'.grid-item', columnWidth: 250});
+    var $grid = $('.grid').masonry({itemSelector:'.grid-item', columnWidth: 250});
 
 
 
@@ -101,29 +106,77 @@
         'image_017.png',
         'image_018.png',
         'image_019.png',
-        'image_020.png'
+        'image_020.png',
+        'image_021.png',
+        'image_022.png',
+        'image_023.png',
+        'image_024.png',
+        'image_025.png',
+        'image_026.png',
+        'image_027.png',
+        'image_028.png',
+        'image_029.png',
+        'image_030.png',
+        'image_031.png',
+        'image_032.png',
+        'image_033.png',
+        'image_034.png',
+        'image_035.png',
+        'image_036.png',
+        'image_037.png',
+        'image_038.png',
+        'image_039.png',
+        'image_040.png'
     ];
 
     //array of sizes
-    var imageHeightArray = ['250px', '300px', '325px', '350px', '200px'];   //array of sizes
+    var imageHeightArray = ['100px','150px','200px','250px', '300px', '325px', '350px'];   //array of sizes
 
 
 
     imageArray.forEach(function(element, array, index){
-        var div = document.createElement('div');
 
+        //create outer div
+        var div = document.createElement('div');
         div.classList.add('box');
         div.classList.add('grid-item');
         div.style.height = getRandomHeightFromArray(imageHeightArray);
 
+        //create innerDiv
         var innerDiv = document.createElement('div');
         innerDiv.classList.add('innerBox');
         innerDiv.innerHTML = element;
         innerDiv.style.backgroundColor = getRandomRGBA();
 
+        //append all
         $(div).append(innerDiv);
-        $('.grid').append(div);
+        $grid.append(div);
 
+
+        //===== listeners =====
+
+        //remove windows
+//        $(div).on('click', function(evt){
+//            $grid.masonry('remove', div);
+//            $grid.masonry('layout');
+//        });
+
+        $(div).on('click', function(evt){
+
+            //$(this).toggleClass('enlarged');
+            $grid.prepend($prependItems);
+
+
+            $grid.masonry('layout');
+
+        });
+
+    });
+
+    //global event listeners
+    $(window).on('keypress', function(e){
+        e.preventDefault();
+        console.log(e.which);
     });
 
 

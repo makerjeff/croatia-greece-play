@@ -82,7 +82,9 @@ To load the Three.JS examples:
 ## NOTES JQuery + Bootstrap
 - [Bootstrap Tags](https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/): Add tags automatically in input fields.
 - [JQuery Masonry](http://masonry.desandro.com/): For 'brick-like' JQuery layouts.
+- [JQuery Masonry Documentation](http://masonry.desandro.com/methods.html)
 - [JQuery UI](http://jqueryui.com/): UI Helpers.
+
 
 ## NOTES Payment Options
 - [PayPal, Enabling Fund Transfers within a Group](https://developer.paypal.com/docs/classic/use-cases/uc_social-transfers-within-group/)
