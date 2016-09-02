@@ -156,20 +156,16 @@
         //===== listeners =====
 
         //remove windows
+        $(div).on('click', function(evt){
+            $grid.masonry('remove', div);
+            $grid.masonry('layout');
+        });
+
+//        //enlarge items
 //        $(div).on('click', function(evt){
-//            $grid.masonry('remove', div);
+//            $(this).toggleClass('enlarged');
 //            $grid.masonry('layout');
 //        });
-
-        $(div).on('click', function(evt){
-
-            //$(this).toggleClass('enlarged');
-            $grid.prepend($prependItems);
-
-
-            $grid.masonry('layout');
-
-        });
 
     });
 
